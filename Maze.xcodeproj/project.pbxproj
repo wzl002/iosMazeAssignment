@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF2CB4CE2221DD5800692105 /* for_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF2CB4CD2221DD5800692105 /* for_test.jpg */; };
+		DF2CB4D02221F20D00692105 /* ZLModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4CF2221F20D00692105 /* ZLModel.mm */; };
+		DF2CB4D32221F25100692105 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4D22221F25100692105 /* Wall.m */; };
+		DF2CB4D72221F78300692105 /* Shaderf.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DF2CB4D52221F78300692105 /* Shaderf.fsh */; };
+		DF2CB4D82221F78300692105 /* Shaderf.vsh in Resources */ = {isa = PBXBuildFile; fileRef = DF2CB4D62221F78300692105 /* Shaderf.vsh */; };
 		DFA22276220B7F06002F22F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22275220B7F06002F22F9 /* AppDelegate.m */; };
 		DFA22279220B7F06002F22F9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22278220B7F06002F22F9 /* ViewController.m */; };
 		DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFA2227A220B7F06002F22F9 /* Main.storyboard */; };
@@ -15,6 +20,26 @@
 		DFA22284220B7F06002F22F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22283220B7F06002F22F9 /* main.m */; };
 		DFA2228E220B7F07002F22F9 /* MazeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2228D220B7F07002F22F9 /* MazeTests.m */; };
 		DFA22299220B7F07002F22F9 /* MazeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22298220B7F07002F22F9 /* MazeUITests.m */; };
+		DFA222AA220B7F28002F22F9 /* DisjointSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFA222A6220B7F27002F22F9 /* DisjointSet.cpp */; };
+		DFA222AB220B7F28002F22F9 /* maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFA222A9220B7F28002F22F9 /* maze.cpp */; };
+		DFA222AD220B8136002F22F9 /* MazeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFA222AC220B8136002F22F9 /* MazeRenderer.mm */; };
+		DFA222B3220B89F9002F22F9 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DFA222B0220B89F9002F22F9 /* Shader.fsh */; };
+		DFA222B4220B89F9002F22F9 /* GLESRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFA222B1220B89F9002F22F9 /* GLESRenderer.cpp */; };
+		DFA222B5220B89F9002F22F9 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = DFA222B2220B89F9002F22F9 /* Shader.vsh */; };
+		DFDC8A9E222F1FE400F5F499 /* NGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8A9D222F1FE400F5F499 /* NGLView.m */; };
+		DFDC8AA3222F6C2300F5F499 /* NGLEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8AA2222F6C2300F5F499 /* NGLEngine.m */; };
+		DFDC8AA5222F6C3700F5F499 /* NGLFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */; };
+		DFFC1163223190B9001DB2CF /* NGLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC1162223190B9001DB2CF /* NGLProgram.m */; };
+		DFFC11672231E967001DB2CF /* MazeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFFC11662231E967001DB2CF /* MazeView.mm */; };
+		DFFC116A2231F71D001DB2CF /* Shader.vertsh in Resources */ = {isa = PBXBuildFile; fileRef = DFFC11682231F71D001DB2CF /* Shader.vertsh */; };
+		DFFC116B2231F71D001DB2CF /* Shader.fragsh in Resources */ = {isa = PBXBuildFile; fileRef = DFFC11692231F71D001DB2CF /* Shader.fragsh */; };
+		DFFC1170223228CE001DB2CF /* south.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116C223228CE001DB2CF /* south.jpg */; };
+		DFFC1171223228CE001DB2CF /* north.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116D223228CE001DB2CF /* north.jpg */; };
+		DFFC1172223228CE001DB2CF /* east.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116E223228CE001DB2CF /* east.jpg */; };
+		DFFC1173223228CE001DB2CF /* west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116F223228CE001DB2CF /* west.jpg */; };
+		DFFC1175223317E6001DB2CF /* NGLPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC1174223317E6001DB2CF /* NGLPolygon.m */; };
+		DFFC11792233187F001DB2CF /* NGLTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC11782233187F001DB2CF /* NGLTextureCache.m */; };
+		DFFC117B22332B54001DB2CF /* NGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC117A22332B54001DB2CF /* NGLTexture.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +60,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF2CB4CD2221DD5800692105 /* for_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = for_test.jpg; sourceTree = "<group>"; };
+		DF2CB4CF2221F20D00692105 /* ZLModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZLModel.mm; sourceTree = "<group>"; };
+		DF2CB4D12221F22800692105 /* ZLModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZLModel.h; sourceTree = "<group>"; };
+		DF2CB4D22221F25100692105 /* Wall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
+		DF2CB4D42221F26100692105 /* Wall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
+		DF2CB4D52221F78300692105 /* Shaderf.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shaderf.fsh; sourceTree = "<group>"; };
+		DF2CB4D62221F78300692105 /* Shaderf.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shaderf.vsh; sourceTree = "<group>"; };
 		DFA22271220B7F06002F22F9 /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFA22274220B7F06002F22F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DFA22275220B7F06002F22F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +83,38 @@
 		DFA22294220B7F07002F22F9 /* MazeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFA22298220B7F07002F22F9 /* MazeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MazeUITests.m; sourceTree = "<group>"; };
 		DFA2229A220B7F07002F22F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFA222A6220B7F27002F22F9 /* DisjointSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisjointSet.cpp; sourceTree = "<group>"; };
+		DFA222A7220B7F27002F22F9 /* maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = maze.hpp; sourceTree = "<group>"; };
+		DFA222A8220B7F28002F22F9 /* DisjointSet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DisjointSet.hpp; sourceTree = "<group>"; };
+		DFA222A9220B7F28002F22F9 /* maze.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maze.cpp; sourceTree = "<group>"; };
+		DFA222AC220B8136002F22F9 /* MazeRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeRenderer.mm; sourceTree = "<group>"; };
+		DFA222AE220B8152002F22F9 /* MazeRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MazeRenderer.h; sourceTree = "<group>"; };
+		DFA222AF220B89F9002F22F9 /* GLESRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLESRenderer.hpp; sourceTree = "<group>"; };
+		DFA222B0220B89F9002F22F9 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
+		DFA222B1220B89F9002F22F9 /* GLESRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLESRenderer.cpp; sourceTree = "<group>"; };
+		DFA222B2220B89F9002F22F9 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		DFDC8A9D222F1FE400F5F499 /* NGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLView.m; sourceTree = "<group>"; };
+		DFDC8A9F222F207700F5F499 /* NGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLView.h; sourceTree = "<group>"; };
+		DFDC8AA1222F6C0600F5F499 /* NGLEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLEngine.h; sourceTree = "<group>"; };
+		DFDC8AA2222F6C2300F5F499 /* NGLEngine.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = NGLEngine.m; sourceTree = "<group>"; };
+		DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLFunctions.m; sourceTree = "<group>"; };
+		DFDC8AA6222F6C6300F5F499 /* NGLFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLFunctions.h; sourceTree = "<group>"; };
+		DFFC1162223190B9001DB2CF /* NGLProgram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLProgram.m; sourceTree = "<group>"; };
+		DFFC1164223190CC001DB2CF /* NGLProgram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLProgram.h; sourceTree = "<group>"; };
+		DFFC11652231E94F001DB2CF /* MazeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
+		DFFC11662231E967001DB2CF /* MazeView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MazeView.mm; sourceTree = "<group>"; };
+		DFFC11682231F71D001DB2CF /* Shader.vertsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.vertsh; sourceTree = "<group>"; };
+		DFFC11692231F71D001DB2CF /* Shader.fragsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.fragsh; sourceTree = "<group>"; };
+		DFFC116C223228CE001DB2CF /* south.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = south.jpg; sourceTree = "<group>"; };
+		DFFC116D223228CE001DB2CF /* north.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = north.jpg; sourceTree = "<group>"; };
+		DFFC116E223228CE001DB2CF /* east.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = east.jpg; sourceTree = "<group>"; };
+		DFFC116F223228CE001DB2CF /* west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = west.jpg; sourceTree = "<group>"; };
+		DFFC1174223317E6001DB2CF /* NGLPolygon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLPolygon.m; sourceTree = "<group>"; };
+		DFFC1176223317F9001DB2CF /* NGLPolygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLPolygon.h; sourceTree = "<group>"; };
+		DFFC117722331874001DB2CF /* NGLTextureCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLTextureCache.h; sourceTree = "<group>"; };
+		DFFC11782233187F001DB2CF /* NGLTextureCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLTextureCache.m; sourceTree = "<group>"; };
+		DFFC117A22332B54001DB2CF /* NGLTexture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLTexture.m; sourceTree = "<group>"; };
+		DFFC117C22332B64001DB2CF /* NGLTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLTexture.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,15 +165,36 @@
 		DFA22273220B7F06002F22F9 /* Maze */ = {
 			isa = PBXGroup;
 			children = (
-				DFA22274220B7F06002F22F9 /* AppDelegate.h */,
-				DFA22275220B7F06002F22F9 /* AppDelegate.m */,
+				DFFC11692231F71D001DB2CF /* Shader.fragsh */,
+				DFFC11682231F71D001DB2CF /* Shader.vertsh */,
+				DFDC8A9C222F1B2200F5F499 /* NGLEngine */,
+				DFDC8A9B222F1B0300F5F499 /* SupportFiles */,
+				DF2CB4D52221F78300692105 /* Shaderf.fsh */,
+				DF2CB4D62221F78300692105 /* Shaderf.vsh */,
+				DFA2227D220B7F06002F22F9 /* Assets.xcassets */,
+				DF2CB4CD2221DD5800692105 /* for_test.jpg */,
+				DFA222A6220B7F27002F22F9 /* DisjointSet.cpp */,
+				DFA222A8220B7F28002F22F9 /* DisjointSet.hpp */,
+				DFA22282220B7F06002F22F9 /* Info.plist */,
+				DFA222B1220B89F9002F22F9 /* GLESRenderer.cpp */,
+				DFA222AF220B89F9002F22F9 /* GLESRenderer.hpp */,
+				DFA222B0220B89F9002F22F9 /* Shader.fsh */,
+				DFA222B2220B89F9002F22F9 /* Shader.vsh */,
+				DFA2227F220B7F06002F22F9 /* LaunchScreen.storyboard */,
+				DFA22283220B7F06002F22F9 /* main.m */,
+				DFA2227A220B7F06002F22F9 /* Main.storyboard */,
+				DFA222A9220B7F28002F22F9 /* maze.cpp */,
+				DFA222A7220B7F27002F22F9 /* maze.hpp */,
 				DFA22277220B7F06002F22F9 /* ViewController.h */,
 				DFA22278220B7F06002F22F9 /* ViewController.m */,
-				DFA2227A220B7F06002F22F9 /* Main.storyboard */,
-				DFA2227D220B7F06002F22F9 /* Assets.xcassets */,
-				DFA2227F220B7F06002F22F9 /* LaunchScreen.storyboard */,
-				DFA22282220B7F06002F22F9 /* Info.plist */,
-				DFA22283220B7F06002F22F9 /* main.m */,
+				DFFC11652231E94F001DB2CF /* MazeView.h */,
+				DFFC11662231E967001DB2CF /* MazeView.mm */,
+				DFA222AC220B8136002F22F9 /* MazeRenderer.mm */,
+				DFA222AE220B8152002F22F9 /* MazeRenderer.h */,
+				DF2CB4CF2221F20D00692105 /* ZLModel.mm */,
+				DF2CB4D12221F22800692105 /* ZLModel.h */,
+				DF2CB4D42221F26100692105 /* Wall.h */,
+				DF2CB4D22221F25100692105 /* Wall.m */,
 			);
 			path = Maze;
 			sourceTree = "<group>";
@@ -130,6 +215,40 @@
 				DFA2229A220B7F07002F22F9 /* Info.plist */,
 			);
 			path = MazeUITests;
+			sourceTree = "<group>";
+		};
+		DFDC8A9B222F1B0300F5F499 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DFFC116E223228CE001DB2CF /* east.jpg */,
+				DFFC116D223228CE001DB2CF /* north.jpg */,
+				DFFC116C223228CE001DB2CF /* south.jpg */,
+				DFFC116F223228CE001DB2CF /* west.jpg */,
+				DFA22275220B7F06002F22F9 /* AppDelegate.m */,
+				DFA22274220B7F06002F22F9 /* AppDelegate.h */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		DFDC8A9C222F1B2200F5F499 /* NGLEngine */ = {
+			isa = PBXGroup;
+			children = (
+				DFDC8A9F222F207700F5F499 /* NGLView.h */,
+				DFDC8A9D222F1FE400F5F499 /* NGLView.m */,
+				DFDC8AA1222F6C0600F5F499 /* NGLEngine.h */,
+				DFDC8AA2222F6C2300F5F499 /* NGLEngine.m */,
+				DFDC8AA6222F6C6300F5F499 /* NGLFunctions.h */,
+				DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */,
+				DFFC1164223190CC001DB2CF /* NGLProgram.h */,
+				DFFC1162223190B9001DB2CF /* NGLProgram.m */,
+				DFFC1176223317F9001DB2CF /* NGLPolygon.h */,
+				DFFC1174223317E6001DB2CF /* NGLPolygon.m */,
+				DFFC117722331874001DB2CF /* NGLTextureCache.h */,
+				DFFC11782233187F001DB2CF /* NGLTextureCache.m */,
+				DFFC117C22332B64001DB2CF /* NGLTexture.h */,
+				DFFC117A22332B54001DB2CF /* NGLTexture.m */,
+			);
+			path = NGLEngine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,9 +354,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA222B3220B89F9002F22F9 /* Shader.fsh in Resources */,
+				DFFC116A2231F71D001DB2CF /* Shader.vertsh in Resources */,
+				DFFC1172223228CE001DB2CF /* east.jpg in Resources */,
 				DFA22281220B7F06002F22F9 /* LaunchScreen.storyboard in Resources */,
+				DFFC1173223228CE001DB2CF /* west.jpg in Resources */,
+				DFFC1171223228CE001DB2CF /* north.jpg in Resources */,
+				DFFC1170223228CE001DB2CF /* south.jpg in Resources */,
 				DFA2227E220B7F06002F22F9 /* Assets.xcassets in Resources */,
+				DF2CB4D72221F78300692105 /* Shaderf.fsh in Resources */,
+				DF2CB4CE2221DD5800692105 /* for_test.jpg in Resources */,
 				DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */,
+				DFA222B5220B89F9002F22F9 /* Shader.vsh in Resources */,
+				DF2CB4D82221F78300692105 /* Shaderf.vsh in Resources */,
+				DFFC116B2231F71D001DB2CF /* Shader.fragsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,9 +392,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF2CB4D02221F20D00692105 /* ZLModel.mm in Sources */,
+				DFA222AA220B7F28002F22F9 /* DisjointSet.cpp in Sources */,
+				DF2CB4D32221F25100692105 /* Wall.m in Sources */,
+				DFFC117B22332B54001DB2CF /* NGLTexture.m in Sources */,
+				DFFC11672231E967001DB2CF /* MazeView.mm in Sources */,
+				DFA222B4220B89F9002F22F9 /* GLESRenderer.cpp in Sources */,
+				DFA222AD220B8136002F22F9 /* MazeRenderer.mm in Sources */,
+				DFDC8A9E222F1FE400F5F499 /* NGLView.m in Sources */,
 				DFA22279220B7F06002F22F9 /* ViewController.m in Sources */,
+				DFFC1163223190B9001DB2CF /* NGLProgram.m in Sources */,
+				DFFC11792233187F001DB2CF /* NGLTextureCache.m in Sources */,
 				DFA22284220B7F06002F22F9 /* main.m in Sources */,
+				DFA222AB220B7F28002F22F9 /* maze.cpp in Sources */,
+				DFDC8AA3222F6C2300F5F499 /* NGLEngine.m in Sources */,
 				DFA22276220B7F06002F22F9 /* AppDelegate.m in Sources */,
+				DFDC8AA5222F6C3700F5F499 /* NGLFunctions.m in Sources */,
+				DFFC1175223317E6001DB2CF /* NGLPolygon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +582,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TKHC8Z843;
 				INFOPLIST_FILE = Maze/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,6 +600,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TKHC8Z843;
 				INFOPLIST_FILE = Maze/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
