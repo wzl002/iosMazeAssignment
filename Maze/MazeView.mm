@@ -11,11 +11,13 @@
 #include "GLESRenderer.hpp"
 #import <AVFoundation/AVFoundation.h>
 #import "NGLShader.h"
+#import "math.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
 static const int numRows = 4, numCols = 4;    // maze size
+const float cameraHight = 0.2;
 
 @interface MazeView()
 {
@@ -28,16 +30,18 @@ static const int numRows = 4, numCols = 4;    // maze size
         Maze *mazeGenerate;
         Wall * _crate;
     
-    float rotAngle_x, rotAngle_y, lastRotation_x, lastRotation_y,
-    scale, lastEndScale, posX, lastPosX, posY, lastPosY;
+    float rotAngle_x, rotAngle_y, lastRotation_x, lastRotation_y, posX, lastPosX, posY, lastPosY;
+    float _moveSpeed;
     
     BOOL _isDayLighting;
     BOOL _isFlashLightOn;
     BOOL _isFogOn;
     float _fogIntensity;
+
     
     float x;
     float z;
+    float crateRotation;
 }
 @end
 
@@ -58,13 +62,16 @@ static const int numRows = 4, numCols = 4;    // maze size
     _isFlashLightOn = true;
     _isFogOn = true;
     
-    _perspective = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
+    _moveSpeed = 0.05;
 }
 
 - (void) initCameraLocation
 {
-    _camera.position = GLKVector3Make(0, 0, -0.5f);
-    _camera.rotation = GLKVector3Make(-90, 0, 0);
+    _camera.position = GLKVector3Make(0, 0, cameraHight);
+    _camera.rotation = GLKVector3Make(90, 0, 0);
+    lastRotation_x = 90;
+    lastRotation_y = 0;
+    lastPosX = lastPosY = 0;
 }
 
 
@@ -73,6 +80,8 @@ static const int numRows = 4, numCols = 4;    // maze size
     // 设置放大倍数
     // [self.view setContentScaleFactor:[[UIScreen mainScreen] scale]];
 
+    _perspective = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
+    
     _shader = [[NGLShader alloc] init];
     [_shader use];
     
@@ -220,11 +229,14 @@ static const int numRows = 4, numCols = 4;    // maze size
 
 - (void)update:(double) deltaTime {
 
-    x -= deltaTime;
+//    x -= deltaTime;
     z -= 25 * deltaTime;
+    crateRotation += 25 * deltaTime;
+    while (crateRotation >= 360.0f)
+        crateRotation -= 360.0f;
     
-    _camera.position = GLKVector3Make(0, 0, 0.2f);
-    _camera.rotation = GLKVector3Make(90, 0, 0);
+//    _camera.position = GLKVector3Make(0, 0, 0.2f);
+//    _camera.rotation = GLKVector3Make(90, 0, 0);
     
     bool invertible;
     GLKMatrix4 viewMatrix = GLKMatrix4Invert(_camera.modelMatrix, &invertible);
@@ -234,7 +246,7 @@ static const int numRows = 4, numCols = 4;    // maze size
     
     GLKMatrix4 projectionMatrix = GLKMatrix4Multiply(_perspective, viewMatrix);
     
-    _crate.rotation = GLKVector3Make(0, 0, z);
+    _crate.rotation = GLKVector3Make(0, 0, crateRotation);
     
     for (Wall* wall in _walls) {
         wall.viewProjectionMatrix = projectionMatrix;
@@ -246,8 +258,6 @@ static const int numRows = 4, numCols = 4;    // maze size
 - (void)draw:(CGRect)drawRect {
     
     for (Wall* wall in _walls) {
-        // model.viewProjectionMatrix = camera.matrixViewProjection;
-        // model.viewMatrix = camera.matrix;
         [wall draw];
     }
     
@@ -271,24 +281,24 @@ static const int numRows = 4, numCols = 4;    // maze size
     _isFogOn = !_isFogOn;
 }
 
-- (void) setFogIntensity:(float) value;
+- (void) setFogIntensity:(float) value
 {
     _fogIntensity = value;
 }
 
 - (void) moveForward
 {
-    
+    posX = _camera.position.x - _moveSpeed * sinf(_camera.rotation.y / 180 * M_PI);
+    posY = _camera.position.y + _moveSpeed * cosf(_camera.rotation.y / 180 * M_PI);
+    _camera.position = GLKVector3Make(posX, posY, cameraHight);
 }
-
-
 
 - (void) lookAround:(CGPoint) translation isEnd:(Boolean)isEnd
 {
 
-    rotAngle_x = lastRotation_x + translation.x;
-    rotAngle_y = lastRotation_y + translation.y;
-    
+    rotAngle_y = lastRotation_y - translation.x * 0.6; // 0.6 sensitivity
+    // rotAngle_x = lastRotation_x - translation.y; // never move
+
     while (rotAngle_x >= 360.0f)
         rotAngle_x -= 360.0f;
     while (rotAngle_y >= 360.0f)
@@ -298,18 +308,19 @@ static const int numRows = 4, numCols = 4;    // maze size
     while (rotAngle_y <= -360.0f)
         rotAngle_y += 360.0f;
     
+    _camera.rotation = GLKVector3Make(rotAngle_x, rotAngle_y, 0);
     
-    // NSLog(@"%f/%f : %f/%f", translation.x, rotAngle_x, translation.y, rotAngle_y);
+    NSLog(@"%f/%f : %f/%f", translation.x, rotAngle_x, translation.y, rotAngle_y);
     
     if(isEnd){
-        lastRotation_x = rotAngle_x;
-        lastRotation_y = rotAngle_y;
+        lastRotation_x = _camera.rotation.x;
+        lastRotation_y = _camera.rotation.y;
     }
 }
 
 - (void) resetCamera
 {
-    
+    [self initCameraLocation];
 }
 
 @end

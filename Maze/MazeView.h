@@ -25,6 +25,23 @@
 
 - (void)draw:(CGRect)drawRect;
 
+
+#pragma mark interactions
+
+- (void) swithDayNight;
+
+- (void) swithFlashLight;
+
+- (void) swithFog;
+
+- (void) setFogIntensity:(float) value;
+
+- (void) moveForward;
+
+- (void) lookAround:(CGPoint) translation isEnd:(Boolean)isEnd;
+
+- (void) resetCamera;
+
 @end
 
 #endif /* MazeView_h */
