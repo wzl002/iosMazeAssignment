@@ -10,10 +10,11 @@
 #define Wall_h
 
 #import "ZLModel.h"
+#import "NGLShader.h"
 
 @interface Wall : ZLModel
 
-- (instancetype)initWithShader:(GLuint)shader view:(UIView *)view;
+- (instancetype)initWithShader:(NGLShader *)shader view:(UIView *)view;
 
 @end
 

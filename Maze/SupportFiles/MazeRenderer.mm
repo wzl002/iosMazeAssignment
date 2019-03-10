@@ -111,10 +111,10 @@
     
     glUseProgram(self.myProgram);
     
-    wall = [[Wall alloc] initWithShader:self.myProgram view:self.view];
-    
-    wall.position = GLKVector3Make(0.0, 0.0, 0);
-    wall.rotation = GLKVector3Make(0.0, 30.0, 0);
+//    wall = [[Wall alloc] initWithShader:self.myProgram view:self.view];
+//    
+//    wall.position = GLKVector3Make(0.0, 0.0, 0);
+//    wall.rotation = GLKVector3Make(0.0, 30.0, 0);
     // wall.scale = 0.5;
     _rotate = 0;
     

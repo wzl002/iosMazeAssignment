@@ -13,10 +13,6 @@
 #import "GLESRenderer.hpp"
 #import "NGLTextureCache.h"
 
-static int globelTextureCount = 0;
-
-NSMutableArray            *_fileNames;
-
 @interface ZLModel ()
 
 @end
@@ -28,10 +24,10 @@ NSMutableArray            *_fileNames;
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
     GLuint _indexCount;
-    GLuint _shader;
-    GLKMatrix4 _modelViewProjectionMatrix;
-    GLKMatrix4 _viewMatrix;
-    // GLKBaseEffect *_effect;
+    NGLShader * _shader;
+    
+    GLKMatrix4 _MVPMatrix;
+    
     UIView *_view;
     
     NGLTextureCache * _textures;
@@ -42,27 +38,20 @@ NSMutableArray            *_fileNames;
     float *vertices, *normals, *texCoords;
     
     int _textureCount;
-    
-    float x;
-    float z;
+
 }
 
-- (instancetype) initWithName: (char *)name vertices:(GLfloat * )vertices vertexCount:(unsigned int)vertexCount indices:(GLubyte *)vertexIndices indexCount:(unsigned int)indexCount shader:(GLuint)shader view:(UIView *)view {
+- (instancetype) initWithName: (char *)name vertices:(GLfloat * )vertices vertexCount:(unsigned int)vertexCount indices:(GLubyte *)vertexIndices indexCount:(unsigned int)indexCount shader:(NGLShader *)shader view:(UIView *)view {
     
     if ((self = [super init])) {
         _name = name;
         _indexCount = indexCount;
-        z = -4.0f;
         
         _view = view;
         _shader = shader;
         
         // _textureCount = globelTextureCount++;//TODO
         _textureCount = -1;
-        
-        self.position = GLKVector3Make(0, 0, 0);
-        self.rotation = GLKVector3Make(0, 0, 0);
-        self.scale = GLKVector3Make(1.0, 1.0, 1.0);
         
         [self loadModels];
         
@@ -76,19 +65,19 @@ NSMutableArray            *_fileNames;
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount, vertices, GL_STATIC_DRAW);
         
-        GLint vertexHandle = glGetAttribLocation(_shader, "a_Position");
-        GLint normalHandle = glGetAttribLocation(_shader, "a_Normal");
+        // GLint vertexHandle = glGetAttribLocation(_shader, "a_Position");
+        // GLint normalHandle = glGetAttribLocation(_shader, "a_Normal");
         // GLint textureCoordHandle = glGetAttribLocation(_shader, "a_TextureCoord");
         
-        glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, NULL);
-        glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (float *)NULL + 3);
+        glVertexAttribPointer(_shader.vertexHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, NULL);
+        glVertexAttribPointer(_shader.normalHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (float *)NULL + 3);
         
-        glEnableVertexAttribArray(vertexHandle);
-        glEnableVertexAttribArray(normalHandle);
+        glEnableVertexAttribArray(_shader.vertexHandle);
+        glEnableVertexAttribArray(_shader.normalHandle);
         
         glBindVertexArrayOES(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-     
+        
         // [self uploadTexture];
     }
     return  self;
@@ -101,7 +90,10 @@ NSMutableArray            *_fileNames;
         if(_textures == nil){
             _textures = [[NGLTextureCache alloc] init];
         }
-        _textureCount = [self setupTexture:_textureImage];
+        NGLTexture *texture = [[NGLTexture alloc] initWithFilePath:fileName];
+        [_textures addTexture:(NGLTexture *) texture];
+        
+        _textureCount = [_textures getLastUnit];
     }
 }
 
@@ -111,137 +103,78 @@ NSMutableArray            *_fileNames;
     
     // glGenVertexArraysOES(1, &_vertexArrayObject);
     // glBindVertexArrayOES(_vertexArrayObject);
-//    GLuint crateTexture = [self setupTexture:_textureImage];
-//    glActiveTexture(GL_TEXTURE0 + _textureCount);
-//    glBindTexture(GL_TEXTURE_2D, crateTexture);
-//    glUniform1i(glGetUniformLocation(_shader, "u_Texture"), _textureCount);
     
-    GLint vertexHandle = glGetAttribLocation(_shader, "a_Position");
-    GLint normalHandle = glGetAttribLocation(_shader, "a_Normal");
-    GLint colorHandle = glGetAttribLocation(_shader, "a_Color");
-    GLint textureCoord = glGetAttribLocation(_shader, "a_TextureCoord");
+    glVertexAttribPointer(_shader.vertexHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, vertices);
+    glVertexAttribPointer(_shader.normalHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, normals);
+    glVertexAttribPointer(_shader.textureCoordHandle, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, texCoords);
+    glVertexAttrib4f ( _shader.colorHandle, 1.0f, 0.0f, 0.0f, 1.0f );
     
-    glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, vertices);
-    glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, normals);
-    glVertexAttribPointer(textureCoord, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, texCoords);
-    glVertexAttrib4f ( colorHandle, 1.0f, 0.0f, 0.0f, 1.0f );
-    
-    glEnableVertexAttribArray(vertexHandle);
-    glEnableVertexAttribArray(normalHandle);
-    glEnableVertexAttribArray(textureCoord);
+    glEnableVertexAttribArray(_shader.vertexHandle);
+    glEnableVertexAttribArray(_shader.normalHandle);
+    glEnableVertexAttribArray(_shader.textureCoordHandle);
     
     // glBindVertexArrayOES(0);
     
 }
 
-
-- (GLKMatrix4) modelMatrix {
-    // local
-    GLKMatrix4 modelMatrix = GLKMatrix4Identity;
-    modelMatrix = GLKMatrix4Translate(modelMatrix, self.position.x, self.position.y, self.position.z);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.x), 1.0, 0.0, 0.0 );
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.y), 0.0, 1.0, 0.0 );
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.z), 0.0, 0.0, 1.0 );
-    modelMatrix = GLKMatrix4Scale(modelMatrix, self.scale.x, self.scale.y, self.scale.z);
-    
-    return modelMatrix;
-}
-
 - (void) update:(double) deltaTime {
-    
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
-    
+
     GLKMatrix4 modelViewMatrix = [self modelMatrix];
+    _MVPMatrix = GLKMatrix4Multiply(_viewProjectionMatrix, modelViewMatrix);
     
-    x -= deltaTime;
-    z -= 25 * deltaTime;
-    
-    // world
-    _viewMatrix = GLKMatrix4MakeTranslation(1, -1, -0.1f);
-    modelViewMatrix = GLKMatrix4Multiply(_viewMatrix, modelViewMatrix);
-    
-    // view
-    //_viewMatrix = GLKMatrix4Rotate(_viewMatrix, GLKMathDegreesToRadians(0), 1.0, 0.0, 0.0 );
-    //_viewMatrix = GLKMatrix4Rotate(_viewMatrix, GLKMathDegreesToRadians(0), 0.0, 1.0, 0.0 );
-    _viewMatrix = GLKMatrix4Rotate(GLKMatrix4Identity, GLKMathDegreesToRadians(90), 1.0, 0.0, 0.0 );// vertical rotate
-    _viewMatrix = GLKMatrix4Rotate(_viewMatrix, GLKMathDegreesToRadians(z), 0.0, 0.0, 1.0 ); // Horizontally rotate
-    // _viewMatrix = GLKMatrix4Translate(_viewMatrix, -1, 1, 0);
-    
-    modelViewMatrix = GLKMatrix4Multiply(_viewMatrix, modelViewMatrix);
-    
-
-    
-    _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
-
 }
 
 - (void) draw {
     
     // glBindVertexArrayOES(_vertexArrayObject);
     
-    glUseProgram(_shader);
+    [_shader use];
     
     [self loadModels];
     
     if(_textureCount != -1){
-        [_textures bindUnit:_textureCount toLocation:glGetUniformLocation(_shader, "u_Texture")];
+        [_textures bindUnit:_textureCount toLocation:_shader.texSampler2DHandle];
     }
     
-    GLint mvpMatrixHandle = glGetUniformLocation(_shader, "u_ModelViewProjection");
-    glUniformMatrix4fv(mvpMatrixHandle, 1, GL_FALSE, _modelViewProjectionMatrix.m);
+    glUniformMatrix4fv(_shader.mvpMatrixHandle, 1, GL_FALSE, _MVPMatrix.m);
     
-    GLKMatrix4 mvMat = GLKMatrix4Multiply(_viewMatrix, [self modelMatrix]);
-    GLint modelView = glGetUniformLocation(_shader, "u_ModelView");
-    glUniformMatrix4fv(modelView, 1, GL_FALSE, (const GLfloat*)mvMat.m);
+    glUniform4f(_shader.lightingHandle, 1, 1, 1.0f, 1.0f);
+    glUniform4f(_shader.materialHandle, 1.0f, 1.0f, 0.5f, .5f);
+    glUniform1f(_shader.transparencyHandle, 1.0f);
+    
+    // lighting
+    GLKMatrix4 _mIMatrix = GLKMatrix4Transpose(self.orthoMatrix);
+    GLKMatrix4 _mvIMatrix = GLKMatrix4Multiply(_mIMatrix, _viewMatrix);
+    glUniform3fv(_shader.scaleHandle, 1, self.scale.v);
+    glUniformMatrix4fv(_shader.modelInverseMatrixHandle, 1, GL_FALSE, _mIMatrix.m);
+    glUniformMatrix4fv(_shader.modelViewInverseMatrixHandle, 1, GL_FALSE, _mvIMatrix.m);
+    
 
-    GLint lightingHandle = glGetUniformLocation(_shader,"u_LightingParameters");
-    GLint transparencyHandle = glGetUniformLocation(_shader, "u_transparency");
-    glUniform4f(lightingHandle, 0, 0, 1.0f, 1.0f);
-    glUniform1f(transparencyHandle, 1.0f);
+    // lighting end
     
+    
+    // lighting debug code
+//        GLKVector4 u_nglLightPosition = GLKVector4Make(2.0f, 2.0f, 3.0f, 1.0f);
+//        glUniform4fv(_shader.lightPositionHandle, 1, u_nglLightPosition.v);
+//        glUniform4fv(_shader.lightColorHandle, 1, GLKVector4Make(1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f).v);
+//        glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-1;
+//    
+//     GLKVector4 a_Position = GLKVector4Make(0.5, 0.5, 0.5, 1.0);
+//     GLKVector4 _nglOrigin = GLKVector4Make(0.0,0.0,0.0,1.0);
+//    GLKVector4 _nglPosition = GLKVector4Multiply(a_Position, GLKVector4MakeWithVector3(self.scale, 1.0f));
+//    GLKVector4 v_nglVEye = GLKVector4Subtract(GLKMatrix4MultiplyVector4(_mvIMatrix, _nglOrigin), _nglPosition);
+//    GLKVector4 v_nglVLight = GLKVector4Subtract(GLKMatrix4MultiplyVector4(_mIMatrix, u_nglLightPosition), _nglPosition);
+//    GLKVector3 v_nglVLight3 = GLKVector3Make(v_nglVLight.x, v_nglVLight.y, v_nglVLight.z);
+//    float length = GLKVector3Length(v_nglVLight3);
+//    float v_nglLightLevel = 1.0f / GLKVector3Length(v_nglVLight3);
+//    GLKVector3 nglNormal = GLKVector3Make(0.0f, 1.0f, 0.0f);
+//    float _nglLightD = GLKVector3DotProduct(nglNormal, v_nglVLight3);
+//    
     // glDrawArrays(GL_TRIANGLES, 0, 36);
-    
     glDrawElements ( GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices );
     
     // glBindVertexArrayOES(0);
     
 }
 
-
-// Load in and set up texture image (adapted from Ray Wenderlich)
-- (GLuint)setupTexture:(NSString *)fileName
-{
-    NGLTexture *texture = [[NGLTexture alloc] initWithFilePath:fileName];
-    [_textures addTexture:(NGLTexture *) texture];
-    
-    return [_textures getLastUnit];
-    
-    CGImageRef spriteImage = [UIImage imageNamed:fileName].CGImage;
-    if (!spriteImage) {
-        NSLog(@"Failed to load image %@", fileName);
-        exit(1);
-    }
-    
-    size_t width = CGImageGetWidth(spriteImage);
-    size_t height = CGImageGetHeight(spriteImage);
-    
-    GLubyte *spriteData = (GLubyte *) calloc(width*height*4, sizeof(GLubyte));
-    
-    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width*4, CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);
-    
-    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
-    
-    CGContextRelease(spriteContext);
-    
-    GLuint texName;
-    glGenTextures(1, &texName);
-    glBindTexture(GL_TEXTURE_2D, texName);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
-    
-    free(spriteData);
-    return texName;
-}
 @end

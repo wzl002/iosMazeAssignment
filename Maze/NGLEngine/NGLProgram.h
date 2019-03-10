@@ -3,7 +3,7 @@
 //  Maze
 //
 //  Created by Zilong Wang on 2019/3/7.
-//  Copyright © 2019年 bcit. All rights reserved.
+//  Copyright © 2019 bcit. All rights reserved.
 //
 
 #ifndef NGLProgram_h

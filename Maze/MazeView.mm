@@ -10,6 +10,7 @@
 #include "maze.hpp"
 #include "GLESRenderer.hpp"
 #import <AVFoundation/AVFoundation.h>
+#import "NGLShader.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,11 +20,24 @@ static const int numRows = 4, numCols = 4;    // maze size
 @interface MazeView()
 {
     @private
-        NGLProgram *   _program;
+        NGLShader *   _shader;
         GLKView *     _view;
+        NGLObject * _camera;
+        GLKMatrix4  _perspective;
         NSMutableArray<Wall *> *_walls;
-        float _rotate;
         Maze *mazeGenerate;
+        Wall * _crate;
+    
+    float rotAngle_x, rotAngle_y, lastRotation_x, lastRotation_y,
+    scale, lastEndScale, posX, lastPosX, posY, lastPosY;
+    
+    BOOL _isDayLighting;
+    BOOL _isFlashLightOn;
+    BOOL _isFogOn;
+    float _fogIntensity;
+    
+    float x;
+    float z;
 }
 @end
 
@@ -36,6 +50,21 @@ static const int numRows = 4, numCols = 4;    // maze size
     [self setupGL];
     
     [self createMaze];
+    
+    _camera = [[NGLObject alloc]init];
+    [self initCameraLocation];
+    
+    _isDayLighting = true;
+    _isFlashLightOn = true;
+    _isFogOn = true;
+    
+    _perspective = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
+}
+
+- (void) initCameraLocation
+{
+    _camera.position = GLKVector3Make(0, 0, -0.5f);
+    _camera.rotation = GLKVector3Make(-90, 0, 0);
 }
 
 
@@ -44,28 +73,25 @@ static const int numRows = 4, numCols = 4;    // maze size
     // 设置放大倍数
     // [self.view setContentScaleFactor:[[UIScreen mainScreen] scale]];
 
-    //shader
-//    _program = [[NGLProgram alloc] init];
-//
-//    [_program setVertexFile:@"Shader.vertsh" fragmentFile:@"Shader.fragsh"];
-//
-//    [_program use];
+    _shader = [[NGLShader alloc] init];
+    [_shader use];
     
-    self.shader = [self loadShaders:@"Shader"];
-    
-    glUseProgram(self.shader);
-    
-    [self setupTexture:@"for_test"];
-    
-    // wall.scale = 0.5;
-    _rotate = 0;
-    
+    // lighting
+    glUniform4f(_shader.lightPositionHandle, 2.0f, 2.0f, 3.0f, 1.0f);
+    glUniform4f(_shader.lightColorHandle, 1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f);
+    glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-100;
+    // lighting end
 }
 
 
 - (void)createMaze
 {
     _walls = [[NSMutableArray alloc]init];
+    
+    _crate = [self createCrate: 0 col:0];
+    
+    [_walls addObject:_crate];
+    
     mazeGenerate = new Maze(numRows, numCols);
     mazeGenerate->Create();
     
@@ -105,6 +131,7 @@ static const int numRows = 4, numCols = 4;    // maze size
     // The map direction is also reversed
     // south <-> north, west <-> east
     
+    
     for (i=numRows-1; i>=0; i--) {
         for (j=numCols-1; j>=0; j--) {
             if(mazeGenerate->GetCell(i, j).southWallPresent){
@@ -120,13 +147,14 @@ static const int numRows = 4, numCols = 4;    // maze size
             if(mazeGenerate->GetCell(i, j).westWallPresent){
                 [_walls addObject:[self createEastWall:-j col:i]];
             }
+            [_walls addObject:[self createFloor:-j col:i]];
         }
     }
 }
 
 - (Wall *)createSouthWall:(int) row col:(int)col
 {
-    Wall* wall = [[Wall alloc] initWithShader:self.shader view:_view];
+    Wall* wall = [[Wall alloc] initWithShader:_shader view:_view];
     
     wall.position = GLKVector3Make(row , col - 0.45, 0);
     wall.scale = GLKVector3Make(1.0f, 0.1f, 1.0f);
@@ -137,7 +165,7 @@ static const int numRows = 4, numCols = 4;    // maze size
 
 - (Wall *)createNorthWall:(int) row col:(int)col
 {
-    Wall * wall = [[Wall alloc] initWithShader:self.shader view:_view];
+    Wall * wall = [[Wall alloc] initWithShader:_shader view:_view];
     
     wall.position = GLKVector3Make(row , col + 0.45, 0);
     wall.scale = GLKVector3Make(1.0f, 0.1f, 1.0f);
@@ -148,7 +176,7 @@ static const int numRows = 4, numCols = 4;    // maze size
 
 - (Wall *)createEastWall:(int) row col:(int)col
 {
-    Wall * wall = [[Wall alloc] initWithShader:self.shader view:_view];
+    Wall * wall = [[Wall alloc] initWithShader:_shader view:_view];
     
     wall.position = GLKVector3Make(row + 0.45, col, 0);
     wall.scale = GLKVector3Make(0.1f, 1.0f, 1.0f);
@@ -159,7 +187,7 @@ static const int numRows = 4, numCols = 4;    // maze size
 
 - (Wall *)createWestWall:(int) row col:(int)col
 {
-    Wall * wall = [[Wall alloc] initWithShader:self.shader view:_view];
+    Wall * wall = [[Wall alloc] initWithShader:_shader view:_view];
     
     wall.position = GLKVector3Make(row - 0.45, col, 0);
     wall.scale = GLKVector3Make(0.1f, 1.0f, 1.0f);
@@ -167,11 +195,49 @@ static const int numRows = 4, numCols = 4;    // maze size
     wall.textureImage = @"west.jpg";
     return wall;
 }
+- (Wall *)createFloor:(int) row col:(int)col
+{
+    Wall * wall = [[Wall alloc] initWithShader:_shader view:_view];
+    
+    wall.position = GLKVector3Make(row, col, - 0.45);
+    wall.scale = GLKVector3Make(1.0f, 1.0f, 0.05f);
+    
+    wall.textureImage = @"floor.jpg";
+    return wall;
+}
+
+- (Wall *)createCrate:(int) row col:(int)col
+{
+    Wall* wall = [[Wall alloc] initWithShader:_shader view:_view];
+    
+    float scale = 0.4f;
+    wall.position = GLKVector3Make(row, col + 1, - 0.45 + scale/2);
+    wall.scale = GLKVector3Make(scale, scale, scale);
+    
+    wall.textureImage = @"crate.jpg";
+    return wall;
+}
 
 - (void)update:(double) deltaTime {
 
+    x -= deltaTime;
+    z -= 25 * deltaTime;
+    
+    _camera.position = GLKVector3Make(0, 0, 0.2f);
+    _camera.rotation = GLKVector3Make(90, 0, 0);
+    
+    bool invertible;
+    GLKMatrix4 viewMatrix = GLKMatrix4Invert(_camera.modelMatrix, &invertible);
+    if(!invertible){
+        NSLog(@"ERROR: view matrix is not invertible");
+    }
+    
+    GLKMatrix4 projectionMatrix = GLKMatrix4Multiply(_perspective, viewMatrix);
+    
+    _crate.rotation = GLKVector3Make(0, 0, z);
+    
     for (Wall* wall in _walls) {
-        // model.modelViewProjectionMatrix = projectionMat;
+        wall.viewProjectionMatrix = projectionMatrix;
         // model.viewMatrix = viewMat;
         [wall update:deltaTime];
     }
@@ -180,102 +246,70 @@ static const int numRows = 4, numCols = 4;    // maze size
 - (void)draw:(CGRect)drawRect {
     
     for (Wall* wall in _walls) {
-        // model.modelViewProjectionMatrix = projectionMat;
-        // model.viewMatrix = viewMat;
+        // model.viewProjectionMatrix = camera.matrixViewProjection;
+        // model.viewMatrix = camera.matrix;
         [wall draw];
     }
     
 }
 
+#pragma mark interactions
+
+- (void) swithDayNight
+{
+    _isDayLighting = !_isDayLighting;
+}
+
+- (void) swithFlashLight
+{
+    _isFlashLightOn = !_isFlashLightOn;
+}
 
 
-/**
- *  c语言编译流程：预编译、编译、汇编、链接
- *  glsl的编译过程主要有glCompileShader、glAttachShader、glLinkProgram三步；
- *
- *  @return program
- */
-- (GLuint)loadShaders:(NSString *)shaderName {
-    //file
-    NSString* vert = [[NSBundle mainBundle] pathForResource:shaderName ofType:@"vertsh"];
-    NSString* frag = [[NSBundle mainBundle] pathForResource:shaderName ofType:@"fragsh"];
+- (void) swithFog
+{
+    _isFogOn = !_isFogOn;
+}
+
+- (void) setFogIntensity:(float) value;
+{
+    _fogIntensity = value;
+}
+
+- (void) moveForward
+{
     
-    GLuint verShader, fragShader;
-    GLint program = glCreateProgram();
+}
+
+
+
+- (void) lookAround:(CGPoint) translation isEnd:(Boolean)isEnd
+{
+
+    rotAngle_x = lastRotation_x + translation.x;
+    rotAngle_y = lastRotation_y + translation.y;
     
-    //compile
-    [self compileShader:&verShader type:GL_VERTEX_SHADER file:vert];
-    [self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:frag];
+    while (rotAngle_x >= 360.0f)
+        rotAngle_x -= 360.0f;
+    while (rotAngle_y >= 360.0f)
+        rotAngle_y -= 360.0f;
+    while (rotAngle_x <= -360.0f)
+        rotAngle_x += 360.0f;
+    while (rotAngle_y <= -360.0f)
+        rotAngle_y += 360.0f;
     
-    glAttachShader(program, verShader);
-    glAttachShader(program, fragShader);
     
-    // link
-    glLinkProgram(program);
+    // NSLog(@"%f/%f : %f/%f", translation.x, rotAngle_x, translation.y, rotAngle_y);
     
-    GLint linkSuccess;
-    glGetProgramiv(program, GL_LINK_STATUS, &linkSuccess);
-    if (linkSuccess == GL_FALSE) { //连接错误
-        GLchar messages[256];
-        glGetProgramInfoLog(self.shader, sizeof(messages), 0, &messages[0]);
-        NSString *messageString = [NSString stringWithUTF8String:messages];
-        NSLog(@"error%@", messageString);
+    if(isEnd){
+        lastRotation_x = rotAngle_x;
+        lastRotation_y = rotAngle_y;
     }
-    
-    //release shader
-    glDeleteShader(verShader);
-    glDeleteShader(fragShader);
-    
-    return program;
 }
 
-- (void)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file {
-    //读取字符串
-    NSString* content = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
-    const GLchar* source = (GLchar *)[content UTF8String];
+- (void) resetCamera
+{
     
-    *shader = glCreateShader(type);
-    glShaderSource(*shader, 1, &source, NULL);
-    glCompileShader(*shader);
 }
 
-- (GLuint)setupTexture:(NSString *)fileName {
-    // 1获取图片的CGImageRef
-    CGImageRef spriteImage = [UIImage imageNamed:fileName].CGImage;
-    if (!spriteImage) {
-        NSLog(@"Failed to load image %@", fileName);
-        exit(1);
-    }
-    
-    // 2 读取图片的大小
-    size_t width = CGImageGetWidth(spriteImage);
-    size_t height = CGImageGetHeight(spriteImage);
-    
-    GLubyte * spriteData = (GLubyte *) calloc(width * height * 4, sizeof(GLubyte)); //rgba 4 bytes
-    
-    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width*4,
-                                                       CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);
-    
-    // 3在CGContextRef上绘图
-    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
-    
-    CGContextRelease(spriteContext);
-    
-    // 4绑定纹理到默认的纹理ID（这里只有一张图片，故而相当于默认于片元着色器里面的colorMap，如果有多张图不可以这么做）
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    float fw = width, fh = height;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fw, fh, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
-    
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    free(spriteData);
-    return 0;
-}
 @end

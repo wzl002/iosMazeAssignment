@@ -15,13 +15,9 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import "Wall.h"
-#import "NGLProgram.h"
 
 
 @interface MazeView : NSObject
-
-@property (nonatomic , assign) GLuint       shader;
-
 
 - (void)setup:(GLKView *)view;
 

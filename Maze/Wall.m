@@ -81,7 +81,7 @@ const static GLfloat gCubeVertexData[216] =
 @implementation Wall
 
 
-- (instancetype)initWithShader:(GLuint)shader view:(UIView *)view {
+- (instancetype)initWithShader:(NGLShader *)shader view:(UIView *)view {
     if((self = [super initWithName:"Wall"
                            vertices:(GLfloat *)gCubeVertexData
                         vertexCount:sizeof(gCubeVertexData)/sizeof(gCubeVertexData[0])

@@ -1,0 +1,59 @@
+
+const lowp vec4 _nglOrigin = vec4(0.0,0.0,0.0,1.0);
+
+// uniform
+uniform mat4 u_ModelView;
+uniform highp mat4 u_ModelViewProjection;
+
+// attribute
+attribute highp vec4 a_Position;
+attribute vec3 a_Normal;
+attribute vec2 a_Color;
+attribute lowp vec2 a_TextureCoord;
+
+// output
+varying vec3 v_ViewPosition;
+varying vec3 v_ViewNormal;
+varying lowp vec2 v_TextureCoord;
+
+// Light input
+uniform highp vec3 u_nglScale;
+uniform highp mat4 u_nglMIMatrix;
+uniform highp mat4 u_nglMVIMatrix;
+uniform highp vec4 u_nglLightPosition;
+uniform highp float u_nglLightAttenuation;
+
+// Light output
+varying highp vec3 v_nglVEye;
+varying highp vec3 v_nglVLight;
+varying lowp float v_nglLightLevel;
+
+// Fog input
+uniform highp float u_nglFogEnd;
+uniform highp float u_nglFogFactor;
+varying lowp float v_nglFog;
+
+void main() {
+
+    v_ViewPosition = (u_ModelView * a_Position).xyz;
+
+    //    Fog
+    // v_nglFog = clamp((u_nglFogEnd - length(gl_Position)) / u_nglFogFactor, 0.0, 1.0);
+
+    //    Light
+    highp vec4 _nglPosition = a_Position * vec4(u_nglScale, 1.0);
+    v_nglVEye = (u_nglMVIMatrix * _nglOrigin - _nglPosition).xyz;
+    v_nglVLight = (u_nglMIMatrix * u_nglLightPosition - _nglPosition).xyz;
+    v_nglLightLevel = clamp(u_nglLightAttenuation / length(v_nglVLight), 0.0, 1.0);
+
+    //    Normals
+    v_ViewNormal = a_Normal;
+    // v_ViewNormal = normalize(a_Normal);
+    // v_ViewNormal = normalize((u_ModelView * vec4(a_Normal, 0.0)).xyz);
+
+    //    Maps
+        v_TextureCoord = a_TextureCoord;
+    //    Base
+    gl_Position = u_ModelViewProjection * a_Position;
+
+}
