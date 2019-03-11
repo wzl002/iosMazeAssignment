@@ -11,8 +11,10 @@
 		DF2CB4D32221F25100692105 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4D22221F25100692105 /* Wall.m */; };
 		DF5FC1B32235A16600C06A6D /* floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B22235A16600C06A6D /* floor.jpg */; };
 		DF5FC1B72235B99900C06A6D /* crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B62235B99900C06A6D /* crate.jpg */; };
+		DF5FC1BA22361E3F00C06A6D /* MinimapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B922361E3F00C06A6D /* MinimapViewController.xib */; };
+		DF5FC1BC22361E5B00C06A6D /* MinimapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5FC1BB22361E5B00C06A6D /* MinimapViewController.mm */; };
 		DFA22276220B7F06002F22F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22275220B7F06002F22F9 /* AppDelegate.m */; };
-		DFA22279220B7F06002F22F9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA22278220B7F06002F22F9 /* ViewController.m */; };
+		DFA22279220B7F06002F22F9 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFA22278220B7F06002F22F9 /* ViewController.mm */; };
 		DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFA2227A220B7F06002F22F9 /* Main.storyboard */; };
 		DFA2227E220B7F06002F22F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFA2227D220B7F06002F22F9 /* Assets.xcassets */; };
 		DFA22281220B7F06002F22F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFA2227F220B7F06002F22F9 /* LaunchScreen.storyboard */; };
@@ -65,11 +67,14 @@
 		DF2CB4D42221F26100692105 /* Wall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
 		DF5FC1B22235A16600C06A6D /* floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = floor.jpg; sourceTree = "<group>"; };
 		DF5FC1B62235B99900C06A6D /* crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crate.jpg; sourceTree = "<group>"; };
+		DF5FC1B922361E3F00C06A6D /* MinimapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MinimapViewController.xib; sourceTree = "<group>"; };
+		DF5FC1BB22361E5B00C06A6D /* MinimapViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MinimapViewController.mm; sourceTree = "<group>"; };
+		DF5FC1BD22361E6C00C06A6D /* MinimapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinimapViewController.h; sourceTree = "<group>"; };
 		DFA22271220B7F06002F22F9 /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFA22274220B7F06002F22F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DFA22275220B7F06002F22F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DFA22277220B7F06002F22F9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DFA22278220B7F06002F22F9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DFA22278220B7F06002F22F9 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		DFA2227B220B7F06002F22F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DFA2227D220B7F06002F22F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFA22280220B7F06002F22F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -169,6 +174,9 @@
 		DF5FC1B82235BF5300C06A6D /* MazeMinmap */ = {
 			isa = PBXGroup;
 			children = (
+				DF5FC1B922361E3F00C06A6D /* MinimapViewController.xib */,
+				DF5FC1BB22361E5B00C06A6D /* MinimapViewController.mm */,
+				DF5FC1BD22361E6C00C06A6D /* MinimapViewController.h */,
 			);
 			path = MazeMinmap;
 			sourceTree = "<group>";
@@ -208,7 +216,7 @@
 				DFA22283220B7F06002F22F9 /* main.m */,
 				DFA2227A220B7F06002F22F9 /* Main.storyboard */,
 				DFA22277220B7F06002F22F9 /* ViewController.h */,
-				DFA22278220B7F06002F22F9 /* ViewController.m */,
+				DFA22278220B7F06002F22F9 /* ViewController.mm */,
 				DFFC11652231E94F001DB2CF /* MazeView.h */,
 				DFFC11662231E967001DB2CF /* MazeView.mm */,
 				DF2CB4CF2221F20D00692105 /* ZLModel.mm */,
@@ -398,6 +406,7 @@
 				DFA2227E220B7F06002F22F9 /* Assets.xcassets in Resources */,
 				DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */,
 				DFFC116B2231F71D001DB2CF /* Shader.fragsh in Resources */,
+				DF5FC1BA22361E3F00C06A6D /* MinimapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,9 +440,10 @@
 				DFA222AD220B8136002F22F9 /* MazeRenderer.mm in Sources */,
 				DFFC11A12234AF06001DB2CF /* NGLObject.m in Sources */,
 				DFDC8A9E222F1FE400F5F499 /* NGLView.m in Sources */,
-				DFA22279220B7F06002F22F9 /* ViewController.m in Sources */,
+				DFA22279220B7F06002F22F9 /* ViewController.mm in Sources */,
 				DFFC1163223190B9001DB2CF /* NGLProgram.m in Sources */,
 				DFFC11792233187F001DB2CF /* NGLTextureCache.m in Sources */,
+				DF5FC1BC22361E5B00C06A6D /* MinimapViewController.mm in Sources */,
 				DFA22284220B7F06002F22F9 /* main.m in Sources */,
 				DFA222AB220B7F28002F22F9 /* maze.cpp in Sources */,
 				DFDC8AA3222F6C2300F5F499 /* NGLEngine.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "MinimapViewController.h"
 
 @interface ViewController : GLKViewController
 

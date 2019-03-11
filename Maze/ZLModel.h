@@ -32,17 +32,7 @@
 /*!
  *                    The final MODEL_VIEW matrix, camera matrix for set lighting
  */
-@property (nonatomic, readonly) GLKMatrix4 viewMatrix;
-
-/*!
- *                    The final orthogonal MODEL_INVERSE matrix (doesn't include the scale).
- */
-@property (nonatomic, readonly) GLKMatrix4 matrixMInverse;
-
-/*!
- *                    The final orthogonal MODEL_VIEW_INVERSE matrix (doesn't include the scale).
- */
-@property (nonatomic, readonly) GLKMatrix4 matrixMVInverse;
+@property (nonatomic) GLKMatrix4 viewMatrix;
 
 @end
 

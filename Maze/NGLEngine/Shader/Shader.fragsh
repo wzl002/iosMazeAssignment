@@ -19,6 +19,7 @@ uniform lowp vec4 u_nglLightColor;
 uniform mediump float u_nglShininess;
 
 varying highp vec3 v_nglVEye;
+varying highp vec4 v_nglVEyeD;
 varying highp vec3 v_nglVLight;
 varying lowp float v_nglLightLevel;
 
@@ -30,6 +31,7 @@ uniform lowp vec4 u_nglFogColor;
 
 // local variables
 lowp vec4 _nglEmission = vec4(0.0);
+lowp vec4 _nglSpotLight = vec4(0.0);
 lowp vec4 _nglAmbient = vec4(0.0);
 lowp vec4 _nglDiffuse = vec4(0.0);
 lowp vec4 _nglSpecular = vec4(0.0);
@@ -138,9 +140,15 @@ void main() {
         // Specular
 //        _nglSpecular = u_nglLightColor * v_nglLightLevel; // u_nglSpecularColor
 //        _nglShineF = pow(_nglShineD, 10);
-        
+        float spotDot = dot (-_nglVEye, normalize(v_nglVEyeD.xyz));
+        float spotCosCutoff = 0.4;
+        _nglSpotLight  = vec4(0.0);
+        if(u_flashLightOn && spotDot > spotCosCutoff){
+            _nglSpotLight  = vec4(0.8);
+        }
+            
         //    Base
-        gl_FragColor = _nglEmission + _nglAmbient + _nglDiffuse * _nglLightF ;// + _nglSpecular * _nglShineF;
+        gl_FragColor = _nglSpotLight + _nglEmission + _nglAmbient + _nglDiffuse * _nglLightF ;// + _nglSpecular * _nglShineF;
 //        gl_FragColor.a = _nglAlpha * _nglDiffuse.a;
 
         if(u_nglfogOn){

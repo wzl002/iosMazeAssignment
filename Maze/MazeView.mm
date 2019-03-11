@@ -6,17 +6,19 @@
 //  Copyright © 2019 bcit. All rights reserved.
 //
 #import "MazeView.h"
-#include <chrono>
-#include "maze.hpp"
-#include "GLESRenderer.hpp"
+
 #import <AVFoundation/AVFoundation.h>
 #import "NGLShader.h"
 #import "math.h"
 
+#include "GLESRenderer.hpp"
 #include <stdlib.h>
 #include <stdio.h>
 
-static const int numRows = 4, numCols = 4;    // maze size
+
+static const int numRows = 4, numCols = 4;
+
+ // maze size
 const float cameraHight = 0.2;
 
 const GLKVector4 backgroundColor = GLKVector4Make(0.3f, 0.4f, 0.5f, 1.0f);
@@ -27,10 +29,9 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     @private
         NGLShader *   _shader;
         GLKView *     _view;
-        NGLObject * _camera;
+
         GLKMatrix4  _perspective;
         NSMutableArray<Wall *> *_walls;
-        Maze *mazeGenerate;
         Wall * _crate;
     
     float rotAngle_x, rotAngle_y, lastRotation_x, lastRotation_y, posX, lastPosX, posY, lastPosY;
@@ -46,6 +47,7 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     float z;
     float crateRotation;
 }
+
 @end
 
 @implementation MazeView
@@ -112,8 +114,8 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     
     [_walls addObject:_crate];
     
-    mazeGenerate = new Maze(numRows, numCols);
-    mazeGenerate->Create();
+    _mazeGenerate = new Maze(numRows, numCols);
+    _mazeGenerate->Create();
     
     // box test
 //    [_walls addObject:[self createSouthWall:0 col:1]];
@@ -128,17 +130,17 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     int i, j;
     for (i=numRows-1; i>=0; i--) {
         for (j=numCols-1; j>=0; j--) {    // top
-            printf(" %c ", mazeGenerate->GetCell(i, j).southWallPresent ? '-' : ' ');
+            printf(" %c ", _mazeGenerate->GetCell(i, j).southWallPresent ? '-' : ' ');
         }
         printf("\n");
         for (j=numCols-1; j>=0; j--) {    // left/right
-            printf("%c", mazeGenerate->GetCell(i, j).eastWallPresent ? '|' : ' ');
-            printf("%c", ((i+j) < 1) ? '*' : ' ');
-            printf("%c", mazeGenerate->GetCell(i, j).westWallPresent ? '|' : ' ');
+            printf("%c", _mazeGenerate->GetCell(i, j).eastWallPresent ? '|' : ' ');
+            printf("%c", ((i+j)< 1) ? '*' : ' ');
+            printf("%c", _mazeGenerate->GetCell(i, j).westWallPresent ? '|' : ' ');
         }
         printf("\n");
         for (j=numCols-1; j>=0; j--) {    // bottom
-            printf(" %c ", mazeGenerate->GetCell(i, j).northWallPresent ? '-' : ' ');
+            printf(" %c ", _mazeGenerate->GetCell(i, j).northWallPresent ? '-' : ' ');
         }
         printf("\n");
     }
@@ -154,17 +156,17 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     
     for (i=numRows-1; i>=0; i--) {
         for (j=numCols-1; j>=0; j--) {
-            if(mazeGenerate->GetCell(i, j).southWallPresent){
+            if(_mazeGenerate->GetCell(i, j).southWallPresent){
                 NSLog(@"Create south wall at %d : %d", -j, i);
                 [_walls addObject:[self createNorthWall:-j col:i]];
             }
-            if(mazeGenerate->GetCell(i, j).northWallPresent){
+            if(_mazeGenerate->GetCell(i, j).northWallPresent){
                 [_walls addObject:[self createSouthWall:-j col:i]];
             }
-            if(mazeGenerate->GetCell(i, j).eastWallPresent){
+            if(_mazeGenerate->GetCell(i, j).eastWallPresent){
                 [_walls addObject:[self createWestWall:-j col:i]];
             }
-            if(mazeGenerate->GetCell(i, j).westWallPresent){
+            if(_mazeGenerate->GetCell(i, j).westWallPresent){
                 [_walls addObject:[self createEastWall:-j col:i]];
             }
             [_walls addObject:[self createFloor:-j col:i]];
@@ -266,6 +268,8 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     glUniform1i(_shader.fogOnHandle, _isFogOn);
     // NSLog(@"%f", _fogIntensity);
     glUniform1f(_shader.fogIntensityHandle, 1.1f - _fogIntensity);
+    
+    glUniform1i(_shader.flashLightOnHandle, _isFlashLightOn);
 }
 
 - (void)update:(double) deltaTime {
@@ -284,7 +288,7 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     
     for (Wall* wall in _walls) {
         wall.viewProjectionMatrix = projectionMatrix;
-        // model.viewMatrix = viewMat;
+        wall.viewMatrix = _camera.modelMatrix;
         [wall update:deltaTime];
     }
 }

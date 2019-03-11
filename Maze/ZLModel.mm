@@ -157,10 +157,12 @@
 //        glUniform4fv(_shader.lightColorHandle, 1, GLKVector4Make(1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f).v);
 //        glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-1;
 //    
-     GLKVector4 a_Position = GLKVector4Make(0.5, 0.5, 0.5, 1.0);
+//     GLKVector4 a_Position = GLKVector4Make(0.5, 0.5, 0.5, 1.0);
 //     GLKVector4 _nglOrigin = GLKVector4Make(0.0,0.0,0.0,1.0);
 //    GLKVector4 _nglPosition = GLKVector4Multiply(a_Position, GLKVector4MakeWithVector3(self.scale, 1.0f));
-//    GLKVector4 v_nglVEye = GLKVector4Subtract(GLKMatrix4MultiplyVector4(_mvIMatrix, _nglOrigin), _nglPosition);
+//    GLKVector4 v_nglVEyeD = GLKMatrix4MultiplyVector4(_mvIMatrix, _nglOrigin);
+//    GLKVector4 v_nglVEye = GLKVector4Subtract(v_nglVEyeD, _nglPosition);
+//    float sp = GLKVector4DotProduct(v_nglVEyeD, v_nglVEye);
 //    GLKVector4 v_nglVLight = GLKVector4Subtract(GLKMatrix4MultiplyVector4(_mIMatrix, u_nglLightPosition), _nglPosition);
 //    GLKVector3 v_nglVLight3 = GLKVector3Make(v_nglVLight.x, v_nglVLight.y, v_nglVLight.z);
 //    float length = GLKVector3Length(v_nglVLight3);

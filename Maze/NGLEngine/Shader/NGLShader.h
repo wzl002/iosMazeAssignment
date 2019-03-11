@@ -42,6 +42,7 @@
 @property (nonatomic) GLint fogOnHandle;
 @property (nonatomic) GLint fogIntensityHandle;
 
+@property (nonatomic) GLint flashLightOnHandle;
 
 @end
 

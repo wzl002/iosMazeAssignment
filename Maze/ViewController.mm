@@ -10,10 +10,15 @@
 #import "MazeView.h"
 #import "NGLView.h"
 
+#include "maze.hpp"
+
+
 @interface ViewController ()
 {
     NGLView * _view;
     BOOL isLongPressing;
+    BOOL isMapShowing;
+    MinimapViewController * _minimapViewController;
     
     __weak IBOutlet UILabel *_fogIntensityText;
 }
@@ -33,13 +38,15 @@
     _maze = [[MazeView alloc] init];
     [_maze setup:_view];
     
-    NSLog(@"Debug: End: viewDidLoad");
-    
     [self addGestureRecognizer];
     isLongPressing = NO;
+    isMapShowing = NO;
     
     _fogIntensityText.text = @"0.5";
     
+    _minimapViewController = [[MinimapViewController alloc] init];
+    
+    NSLog(@"Debug: End: viewDidLoad");
 }
 
 - (void)update
@@ -102,6 +109,13 @@
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
+    UITapGestureRecognizer *twoFingersDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTwoFingersDoubleTap:)];
+    twoFingersDoubleTap.numberOfTapsRequired = 2;
+    twoFingersDoubleTap.numberOfTouchesRequired = 2;
+    [self.view addGestureRecognizer:twoFingersDoubleTap];
+    
+    [doubleTap requireGestureRecognizerToFail:twoFingersDoubleTap];
+    
     UIPanGestureRecognizer *pen = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
     pen.maximumNumberOfTouches = 1;
     [self.view addGestureRecognizer:pen];
@@ -144,7 +158,81 @@
     }
 }
 
+- (IBAction)didTwoFingersDoubleTap:(UITapGestureRecognizer *)sender {
+    Maze* _mazeGenerate =_maze.mazeGenerate;
+    
+    if(!isMapShowing){
 
+        _minimapViewController.mazeGenerate = _mazeGenerate;
+        [_minimapViewController setCurrentPosition:_maze.camera.position rotation:_maze.camera.rotation];
+        [self loadScene:_minimapViewController];
+        
+        isMapShowing = YES;
+    } else {
+         [self unloadScene:_minimapViewController];
+        isMapShowing = NO;
+    }
+    
+}
+
+#pragma mark load screen
+
+
+- (void)loadScene:(UIViewController *)viewController {
+    [self addChildViewController:viewController];
+    [self.view addSubview:viewController.view];
+    [viewController didMoveToParentViewController:self];
+    
+    viewController.view.frame = self.view.bounds;
+    
+    // load Scene Animation
+    [self loadSceneAnimation:viewController];
+    
+}
+
+// Animation: load Scene
+- (void) loadSceneAnimation :(UIViewController *)viewController {
+    // From
+    viewController.view.alpha = 0;
+    
+    // offscreen coordinate (above the top)
+    // self.view.bounds.origin.x -> height
+    viewController.view.frame = CGRectMake(CGRectGetMinX(self.view.bounds),
+                                           -CGRectGetHeight(self.view.bounds),
+                                           CGRectGetWidth(self.view.bounds),
+                                           CGRectGetHeight(self.view.bounds));
+    // To
+    [UIView animateWithDuration:0.5 animations:^{
+        viewController.view.alpha = 1;
+        viewController.view.frame = self.view.bounds;
+    }];
+}
+
+- (void)unloadScene:(UIViewController *)viewController {
+    [viewController didMoveToParentViewController:nil];
+    [viewController removeFromParentViewController];
+    
+    // [viewController.view removeFromSuperview];
+    
+    // Animation
+    [UIView animateWithDuration:.5 animations:^{
+        viewController.view.alpha = 0;
+        
+        // Move offscreen
+        viewController.view.frame = CGRectMake(CGRectGetMinX(self.view.bounds),
+                                               -CGRectGetHeight(self.view.bounds),
+                                               CGRectGetWidth(self.view.bounds),
+                                               CGRectGetHeight(self.view.bounds));
+        
+    } completion:^(BOOL finish) {
+        [viewController.view removeFromSuperview];
+    }];
+}
+
+// hide iphone status bar
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

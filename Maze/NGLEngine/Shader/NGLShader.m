@@ -56,6 +56,9 @@
         self.fogOnHandle = [self uniformLocation:@"u_nglfogOn"];
         self.fogIntensityHandle = [self uniformLocation:@"u_nglfogIntensityHandle"];
         
+        // flash light
+        self.flashLightOnHandle = [self uniformLocation:@"u_flashLightOn"];
+        
     }
     return self;
 }

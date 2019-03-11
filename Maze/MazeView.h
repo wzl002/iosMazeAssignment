@@ -16,8 +16,13 @@
 #import <OpenGLES/ES2/glext.h>
 #import "Wall.h"
 
+#include "maze.hpp"
 
 @interface MazeView : NSObject
+
+@property Maze *mazeGenerate;
+
+@property NGLObject * camera;
 
 - (void)setup:(GLKView *)view;
 
