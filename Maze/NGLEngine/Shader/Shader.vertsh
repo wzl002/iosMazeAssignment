@@ -31,14 +31,14 @@ varying lowp float v_nglLightLevel;
 // Fog input
 uniform highp float u_nglFogEnd;
 uniform highp float u_nglFogFactor;
-varying lowp float v_nglFog;
+uniform highp float u_nglfogIntensityHandle;
+// fog output
+varying lowp float v_nglFog = 0.0;
 
 void main() {
 
     v_ViewPosition = (u_ModelView * a_Position).xyz;
 
-    //    Fog
-    // v_nglFog = clamp((u_nglFogEnd - length(gl_Position)) / u_nglFogFactor, 0.0, 1.0);
 
     //    Light
     highp vec4 _nglPosition = a_Position * vec4(u_nglScale, 1.0);
@@ -55,5 +55,9 @@ void main() {
         v_TextureCoord = a_TextureCoord;
     //    Base
     gl_Position = u_ModelViewProjection * a_Position;
+
+    //    Fog
+v_nglFog = clamp((u_nglFogEnd - length(gl_Position)) / u_nglFogFactor, 0.1, 1.0) * u_nglfogIntensityHandle;
+
 
 }

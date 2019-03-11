@@ -14,6 +14,8 @@
 {
     NGLView * _view;
     BOOL isLongPressing;
+    
+    __weak IBOutlet UILabel *_fogIntensityText;
 }
 @property (nonatomic , strong) MazeView*   maze;
 
@@ -35,6 +37,9 @@
     
     [self addGestureRecognizer];
     isLongPressing = NO;
+    
+    _fogIntensityText.text = @"0.5";
+    
 }
 
 - (void)update
@@ -60,17 +65,21 @@
 
 #pragma mark Buttons
 
-//- (void) swithDayNight;
-//
-//- (void) swithFlashLight;
-//
-//- (void) swithFog;
-//
-//- (void) setFogIntensity:(float) value;
+- (IBAction)swicthDayNight:(UISwitch *)sender {
+    [_maze switchDayNight];
+}
 
--(void)switchFogIntensityLabel
-{
-    // Integer_Label.text = [NSString stringWithFormat:s, value];
+- (IBAction)switchFlashLight:(UISwitch *)sender {
+    [_maze switchFlashLight];
+}
+
+- (IBAction)switchFog:(UISwitch *)sender {
+    [_maze switchFog];
+}
+
+- (IBAction)setFogIntensity:(UISlider *)sender {
+    [_maze setFogIntensity:sender.value];
+    _fogIntensityText.text = [NSString stringWithFormat:@"%.1f", sender.value];
 }
 
 #pragma mark Gestures
@@ -98,9 +107,9 @@
     [self.view addGestureRecognizer:pen];
     
     //[longPress requireGestureRecognizerToFail:pen];
-    
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinch:)];
-    [self.view addGestureRecognizer:pinch];
+//
+//    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinch:)];
+//    [self.view addGestureRecognizer:pinch];
 }
 
 

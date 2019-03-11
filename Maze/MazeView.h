@@ -28,11 +28,11 @@
 
 #pragma mark interactions
 
-- (void) swithDayNight;
+- (void) switchDayNight;
 
-- (void) swithFlashLight;
+- (void) switchFlashLight;
 
-- (void) swithFog;
+- (void) switchFog;
 
 - (void) setFogIntensity:(float) value;
 

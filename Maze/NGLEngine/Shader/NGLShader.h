@@ -33,6 +33,16 @@
 @property (nonatomic) GLint lightPositionHandle;
 @property (nonatomic) GLint lightAttenuationHandle;
 @property (nonatomic) GLint lightColorHandle;
+
+// fog
+@property (nonatomic) GLint fogEndHandle;
+// factor = end - start
+@property (nonatomic) GLint fogFactorHandle;
+@property (nonatomic) GLint fogColorHandle;
+@property (nonatomic) GLint fogOnHandle;
+@property (nonatomic) GLint fogIntensityHandle;
+
+
 @end
 
 #endif /* NGLShader_h */

@@ -148,8 +148,6 @@
     glUniform3fv(_shader.scaleHandle, 1, self.scale.v);
     glUniformMatrix4fv(_shader.modelInverseMatrixHandle, 1, GL_FALSE, _mIMatrix.m);
     glUniformMatrix4fv(_shader.modelViewInverseMatrixHandle, 1, GL_FALSE, _mvIMatrix.m);
-    
-
     // lighting end
     
     
@@ -159,7 +157,7 @@
 //        glUniform4fv(_shader.lightColorHandle, 1, GLKVector4Make(1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f).v);
 //        glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-1;
 //    
-//     GLKVector4 a_Position = GLKVector4Make(0.5, 0.5, 0.5, 1.0);
+     GLKVector4 a_Position = GLKVector4Make(0.5, 0.5, 0.5, 1.0);
 //     GLKVector4 _nglOrigin = GLKVector4Make(0.0,0.0,0.0,1.0);
 //    GLKVector4 _nglPosition = GLKVector4Multiply(a_Position, GLKVector4MakeWithVector3(self.scale, 1.0f));
 //    GLKVector4 v_nglVEye = GLKVector4Subtract(GLKMatrix4MultiplyVector4(_mvIMatrix, _nglOrigin), _nglPosition);
@@ -169,7 +167,14 @@
 //    float v_nglLightLevel = 1.0f / GLKVector3Length(v_nglVLight3);
 //    GLKVector3 nglNormal = GLKVector3Make(0.0f, 1.0f, 0.0f);
 //    float _nglLightD = GLKVector3DotProduct(nglNormal, v_nglVLight3);
-//    
+    
+//    // fog debug
+//    GLKVector4 gl_Position = GLKMatrix4MultiplyVector4( _MVPMatrix, a_Position);
+//    float p_length = GLKVector4Length(gl_Position);
+//    float v_nglFog = (75 - GLKVector4Length(gl_Position)) / 25;
+//                     
+// */ light debug end
+    
     // glDrawArrays(GL_TRIANGLES, 0, 36);
     glDrawElements ( GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices );
     

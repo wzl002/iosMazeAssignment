@@ -19,6 +19,9 @@
 static const int numRows = 4, numCols = 4;    // maze size
 const float cameraHight = 0.2;
 
+const GLKVector4 backgroundColor = GLKVector4Make(0.3f, 0.4f, 0.5f, 1.0f);
+const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
+
 @interface MazeView()
 {
     @private
@@ -61,8 +64,10 @@ const float cameraHight = 0.2;
     _isDayLighting = true;
     _isFlashLightOn = true;
     _isFogOn = true;
+    _fogIntensity = 0.5f;
     
     _moveSpeed = 0.05;
+    
 }
 
 - (void) initCameraLocation
@@ -86,10 +91,16 @@ const float cameraHight = 0.2;
     [_shader use];
     
     // lighting
-    glUniform4f(_shader.lightPositionHandle, 2.0f, 2.0f, 3.0f, 1.0f);
+    glUniform4f(_shader.lightPositionHandle, 0.0f, 1.0f, 2.0f, 1.0f);
     glUniform4f(_shader.lightColorHandle, 1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f);
-    glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-100;
-    // lighting end
+    
+    // fog
+    glUniform1f(_shader.fogEndHandle, 4.0f);
+    // factor = end - start
+    glUniform1f(_shader.fogFactorHandle, 3.6f);
+    glUniform4f(_shader.fogColorHandle, 0.28f, 0.3f, 0.33f, 1.0f);
+    
+    [self updateLighting];
 }
 
 
@@ -227,16 +238,41 @@ const float cameraHight = 0.2;
     return wall;
 }
 
-- (void)update:(double) deltaTime {
-
-//    x -= deltaTime;
-    z -= 25 * deltaTime;
+- (void) updateRotatingCrate:(double) deltaTime
+{
     crateRotation += 25 * deltaTime;
     while (crateRotation >= 360.0f)
         crateRotation -= 360.0f;
     
-//    _camera.position = GLKVector3Make(0, 0, 0.2f);
-//    _camera.rotation = GLKVector3Make(90, 0, 0);
+    _crate.rotation = GLKVector3Make(0, 0, crateRotation);
+    
+}
+
+- (void) updateCamera:(double) deltaTime
+{
+    //    x -= deltaTime;
+    // z -= 25 * deltaTime;
+    //    _camera.position = GLKVector3Make(0, 0, 0.2f);
+    //    _camera.rotation = GLKVector3Make(90, 0, 0);
+}
+
+- (void) updateLighting
+{
+    // intensity, 0-100;
+    glUniform1f(_shader.lightAttenuationHandle, _isDayLighting? 50.0f: 0.9f);
+    GLKVector4 bgcolor = _isDayLighting? backgroundColor : darkBackgroundColor;
+    glClearColor(bgcolor.r, bgcolor.g, bgcolor.b, bgcolor.a);
+    
+    glUniform1i(_shader.fogOnHandle, _isFogOn);
+    // NSLog(@"%f", _fogIntensity);
+    glUniform1f(_shader.fogIntensityHandle, 1.1f - _fogIntensity);
+}
+
+- (void)update:(double) deltaTime {
+
+    [self updateRotatingCrate:deltaTime];
+    [self updateCamera:deltaTime];
+    [self updateLighting];
     
     bool invertible;
     GLKMatrix4 viewMatrix = GLKMatrix4Invert(_camera.modelMatrix, &invertible);
@@ -245,8 +281,6 @@ const float cameraHight = 0.2;
     }
     
     GLKMatrix4 projectionMatrix = GLKMatrix4Multiply(_perspective, viewMatrix);
-    
-    _crate.rotation = GLKVector3Make(0, 0, crateRotation);
     
     for (Wall* wall in _walls) {
         wall.viewProjectionMatrix = projectionMatrix;
@@ -265,18 +299,18 @@ const float cameraHight = 0.2;
 
 #pragma mark interactions
 
-- (void) swithDayNight
+- (void) switchDayNight
 {
     _isDayLighting = !_isDayLighting;
 }
 
-- (void) swithFlashLight
+- (void) switchFlashLight
 {
     _isFlashLightOn = !_isFlashLightOn;
 }
 
 
-- (void) swithFog
+- (void) switchFog
 {
     _isFogOn = !_isFogOn;
 }
@@ -297,7 +331,8 @@ const float cameraHight = 0.2;
 {
 
     rotAngle_y = lastRotation_y - translation.x * 0.6; // 0.6 sensitivity
-    // rotAngle_x = lastRotation_x - translation.y; // never move
+    rotAngle_x = lastRotation_x; // - translation.y; // never move
+    // rotate two axis, implement in camera - todo
 
     while (rotAngle_x >= 360.0f)
         rotAngle_x -= 360.0f;

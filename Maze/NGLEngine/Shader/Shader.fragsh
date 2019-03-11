@@ -7,6 +7,8 @@ uniform vec4 u_LightingParameters;
 uniform vec4 u_MaterialParameters;
 uniform float u_transparency;
 
+uniform bool u_flashLightOn;
+
 varying vec3 v_ViewPosition;
 varying vec3 v_ViewNormal;
 varying vec2 v_TextureCoord;
@@ -19,6 +21,12 @@ uniform mediump float u_nglShininess;
 varying highp vec3 v_nglVEye;
 varying highp vec3 v_nglVLight;
 varying lowp float v_nglLightLevel;
+
+// fog
+varying lowp float v_nglFog;
+
+uniform bool u_nglfogOn;
+uniform lowp vec4 u_nglFogColor;
 
 // local variables
 lowp vec4 _nglEmission = vec4(0.0);
@@ -134,44 +142,11 @@ void main() {
         //    Base
         gl_FragColor = _nglEmission + _nglAmbient + _nglDiffuse * _nglLightF ;// + _nglSpecular * _nglShineF;
 //        gl_FragColor.a = _nglAlpha * _nglDiffuse.a;
-//
-        // We support approximate sRGB gamma.
 
-
-        // Unpack lighting and material parameters for better naming.
-        vec3 viewLightDirection = u_LightingParameters.xyz;
-        float lightIntensity = u_LightingParameters.w;
-//
-        float materialAmbient = u_MaterialParameters.x;
-        float materialDiffuse = u_MaterialParameters.y;
-        float materialSpecular = u_MaterialParameters.z;
-        float materialSpecularPower = u_MaterialParameters.w;
-//
-//        // Normalize varying parameters, because they are linearly interpolated in the vertex shader.
+        if(u_nglfogOn){
+            gl_FragColor = mix(u_nglFogColor, gl_FragColor, v_nglFog);
+        }
         
-//        vec3 viewNormal = normalize(v_ViewNormal);
-//
-//        // Apply inverse SRGB gamma to the texture before making lighting calculations.
-//        // Flip the y-texture coordinate to address the texture from top-left.
-        vec4 objectColor = texture2D(u_Texture, vec2(v_TextureCoord.x, 1.0 - v_TextureCoord.y));
-        objectColor.rgb = pow(objectColor.rgb, vec3(kInverseGamma));
-//
-//        // Ambient light is unaffected by the light intensity.
-        float ambient = materialAmbient;
-//
-//        // Approximate a hemisphere light (not a harsh directional light).
-        float diffuse = lightIntensity * materialDiffuse * 0.5 * (dot(viewNormal, viewLightDirection) + 1.0);
-//
-//        // Compute specular light.
-        vec3 reflectedLightDirection = reflect(viewLightDirection, viewNormal);
-        vec3 viewFragmentDirection = _nglVEye;// normalize(v_ViewPosition);
-        float specularStrength = max(0.0, dot(viewFragmentDirection, reflectedLightDirection));
-        float specular = lightIntensity * materialSpecular * pow(specularStrength, materialSpecularPower);
-//
-//        // Apply SRGB gamma before writing the fragment color.
-//
-//        gl_FragColor.rgb = pow(objectColor.rgb * (ambient + diffuse) + specular, vec3(kGamma));
-//        gl_FragColor.a = u_transparency;
         
     } else { // obj model
         // We support approximate sRGB gamma.

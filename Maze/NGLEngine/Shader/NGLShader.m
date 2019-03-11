@@ -41,8 +41,21 @@
         self.modelInverseMatrixHandle = [self uniformLocation:@"u_nglMIMatrix"];
         self.modelViewInverseMatrixHandle = [self uniformLocation:@"u_nglMVIMatrix"];
         self.lightPositionHandle = [self uniformLocation:@"u_nglLightPosition"];
+        // Attenuation, 0-1000, default 2;
         self.lightAttenuationHandle = [self uniformLocation:@"u_nglLightAttenuation"];
         self.lightColorHandle = [self uniformLocation:@"u_nglLightColor"];
+        
+        // fog
+//        uniform highp float u_nglFogEnd;
+//        uniform highp float u_nglFogFactor;
+//        vuniform ec4 u_nglFogColor
+        self.fogEndHandle = [self uniformLocation:@"u_nglFogEnd"];
+        // factor = end - start
+        self.fogFactorHandle = [self uniformLocation:@"u_nglFogFactor"];
+        self.fogColorHandle = [self uniformLocation:@"u_nglFogColor"];
+        self.fogOnHandle = [self uniformLocation:@"u_nglfogOn"];
+        self.fogIntensityHandle = [self uniformLocation:@"u_nglfogIntensityHandle"];
+        
     }
     return self;
 }
