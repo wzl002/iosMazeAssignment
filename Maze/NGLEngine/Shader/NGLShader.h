@@ -30,7 +30,7 @@
 @property (nonatomic) GLint scaleHandle;
 @property (nonatomic) GLint modelInverseMatrixHandle;
 @property (nonatomic) GLint modelViewInverseMatrixHandle;
-@property (nonatomic) GLint lightPositionHandle;
+@property (nonatomic) GLint lightDirectionHandle;
 @property (nonatomic) GLint lightAttenuationHandle;
 @property (nonatomic) GLint lightColorHandle;
 

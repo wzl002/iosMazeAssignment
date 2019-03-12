@@ -30,7 +30,9 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
         NGLShader *   _shader;
         GLKView *     _view;
 
-        GLKMatrix4  _perspective;
+        GLKMatrix4  _projectionMatrix;
+        GLKMatrix4  _viewMatrix;
+    
         NSMutableArray<Wall *> *_walls;
         Wall * _crate;
     
@@ -87,13 +89,12 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     // 设置放大倍数
     // [self.view setContentScaleFactor:[[UIScreen mainScreen] scale]];
 
-    _perspective = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), fabs(_view.bounds.size.width / _view.bounds.size.height), 0.1f, 150.0f);
     
     _shader = [[NGLShader alloc] init];
     [_shader use];
     
     // lighting
-    glUniform4f(_shader.lightPositionHandle, 0.0f, 1.0f, 2.0f, 1.0f);
     glUniform4f(_shader.lightColorHandle, 1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f);
     
     // fog
@@ -261,8 +262,9 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
 - (void) updateLighting
 {
     // intensity, 0-100;
-    glUniform1f(_shader.lightAttenuationHandle, _isDayLighting? 50.0f: 0.9f);
+    glUniform1f(_shader.lightAttenuationHandle, _isDayLighting? 1.0f: 0.3f);
     GLKVector4 bgcolor = _isDayLighting? backgroundColor : darkBackgroundColor;
+    glUniform4f(_shader.lightColorHandle, 250.0f/255.0, 1.0, 175.0f/255.0, 1.0);
     glClearColor(bgcolor.r, bgcolor.g, bgcolor.b, bgcolor.a);
     
     glUniform1i(_shader.fogOnHandle, _isFogOn);
@@ -279,16 +281,20 @@ const GLKVector4 darkBackgroundColor = GLKVector4Make(0.15f, 0.2f, 0.25f, 1.0f);
     [self updateLighting];
     
     bool invertible;
-    GLKMatrix4 viewMatrix = GLKMatrix4Invert(_camera.modelMatrix, &invertible);
+    _viewMatrix = GLKMatrix4Invert(_camera.modelMatrix, &invertible);
     if(!invertible){
         NSLog(@"ERROR: view matrix is not invertible");
     }
+    GLKVector4 viewLightPosition = GLKMatrix4MultiplyVector4(_viewMatrix, GLKVector4Make(0.0f, 0.0f, 2.0f, 2.0f));
+    glUniform4fv(_shader.lightDirectionHandle, 1, viewLightPosition.v);
+    // glUniform4f(_shader.lightDirectionHandle, 0.0f, 1.0f, -2.0f, 1.0f);
     
-    GLKMatrix4 projectionMatrix = GLKMatrix4Multiply(_perspective, viewMatrix);
+    GLKMatrix4 viewProjectionMatrix = GLKMatrix4Multiply(_projectionMatrix, _viewMatrix);
     
     for (Wall* wall in _walls) {
-        wall.viewProjectionMatrix = projectionMatrix;
-        wall.viewMatrix = _camera.modelMatrix;
+        wall.viewProjectionMatrix = viewProjectionMatrix;
+        wall.viewMatrix = _viewMatrix;
+        wall.cameraModelMatrix = _camera.modelMatrix;
         [wall update:deltaTime];
     }
 }

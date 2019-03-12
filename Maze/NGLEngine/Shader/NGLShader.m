@@ -40,7 +40,7 @@
         self.scaleHandle = [self uniformLocation:@"u_nglScale"];
         self.modelInverseMatrixHandle = [self uniformLocation:@"u_nglMIMatrix"];
         self.modelViewInverseMatrixHandle = [self uniformLocation:@"u_nglMVIMatrix"];
-        self.lightPositionHandle = [self uniformLocation:@"u_nglLightPosition"];
+        self.lightDirectionHandle = [self uniformLocation:@"u_nglLightDirection"];
         // Attenuation, 0-1000, default 2;
         self.lightAttenuationHandle = [self uniformLocation:@"u_nglLightAttenuation"];
         self.lightColorHandle = [self uniformLocation:@"u_nglLightColor"];

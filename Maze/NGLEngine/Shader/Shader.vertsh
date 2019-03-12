@@ -14,53 +14,56 @@ attribute lowp vec2 a_TextureCoord;
 // output
 varying vec3 v_ViewPosition;
 varying vec3 v_ViewNormal;
-varying lowp vec2 v_TextureCoord;
+varying vec2 v_TextureCoord;
+varying lowp float v_ViewPointDistance;
 
 // Light input
 uniform highp vec3 u_nglScale;
 uniform highp mat4 u_nglMIMatrix;
 uniform highp mat4 u_nglMVIMatrix;
-uniform highp vec4 u_nglLightPosition;
+uniform highp vec4 u_nglLightDirection;
 uniform highp float u_nglLightAttenuation;
 
 // Light output
 varying highp vec3 v_nglVEye;
 varying highp vec4 v_nglVEyeD;
-varying highp vec3 v_nglVLight;
+varying highp vec3 v_nglNormalDirection;
+varying highp vec3 v_nglLightDirection;
 varying lowp float v_nglLightLevel;
 
-// Fog input
-uniform highp float u_nglFogEnd;
-uniform highp float u_nglFogFactor;
-uniform highp float u_nglfogIntensityHandle;
-// fog output
-varying lowp float v_nglFog = 0.0;
+
 
 void main() {
-
-    v_ViewPosition = (u_ModelView * a_Position).xyz;
-
     //    Base
     gl_Position = u_ModelViewProjection * a_Position;
 
-    //    Light
+    v_ViewPointDistance = length(gl_Position);
+
+    //  Camera
+    v_ViewPosition = (u_ModelView * a_Position).xyz; // vertexPosition_cameraspace
+    // v_nglVEye = (u_nglMVIMatrix * _nglOrigin - gl_Position).xyz;
+    v_nglVEye = _nglOrigin.xyz - v_ViewPosition; // EyeDirection_cameraspace
+
+    //  Env Light
     highp vec4 _nglPosition = a_Position * vec4(u_nglScale, 1.0);
-    v_nglVEyeD = u_nglMVIMatrix * _nglOrigin;
-    v_nglVEye = (v_nglVEyeD - gl_Position).xyz;
-    v_nglVLight = (u_nglMIMatrix * u_nglLightPosition - gl_Position).xyz;
-    v_nglLightLevel = clamp(u_nglLightAttenuation / length(v_nglVLight), 0.0, 1.0);
+    v_nglVEyeD = vec4(0.0,0.0,-1.0,0.0);
+v_nglNormalDirection = normalize((u_nglMVIMatrix * vec4(a_Normal, 0.0)).xyz);
+
+    v_nglLightDirection = u_nglLightDirection.xyz + v_nglVEye; // LightDirection_cameraspace
+    v_nglLightLevel = clamp(u_nglLightAttenuation, 0.0, 1.0);
+
+    // inside light source
+    // v_nglVLight = (u_nglMIMatrix * u_nglLightPosition - gl_Position).xyz;
+    // v_nglLightLevel = clamp(u_nglLightAttenuation / length(u_nglLightDirection), 0.0, 1.0);
 
     //    Normals
-    v_ViewNormal = a_Normal;
+    // v_ViewNormal = a_Normal;
     // v_ViewNormal = normalize(a_Normal);
-    // v_ViewNormal = normalize((u_ModelView * vec4(a_Normal, 0.0)).xyz);
+    v_ViewNormal = normalize((u_ModelView * vec4(a_Normal, 0.0)).xyz);
 
     //    Maps
-        v_TextureCoord = a_TextureCoord;
+    v_TextureCoord = a_TextureCoord;
 
-
-    //    Fog
-v_nglFog = clamp((u_nglFogEnd - length(gl_Position)) / u_nglFogFactor, 0.1, 1.0) * u_nglfogIntensityHandle;
 
 
 }

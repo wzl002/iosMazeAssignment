@@ -12,7 +12,7 @@ uniform bool u_flashLightOn;
 varying vec3 v_ViewPosition;
 varying vec3 v_ViewNormal;
 varying vec2 v_TextureCoord;
-
+varying float v_ViewPointDistance;
 // Light
 uniform lowp vec4 u_nglLightColor;
 
@@ -20,22 +20,25 @@ uniform mediump float u_nglShininess;
 
 varying highp vec3 v_nglVEye;
 varying highp vec4 v_nglVEyeD;
-varying highp vec3 v_nglVLight;
+varying highp vec3 v_nglNormalDirection;
+varying highp vec3 v_nglLightDirection;
 varying lowp float v_nglLightLevel;
 
-// fog
-varying lowp float v_nglFog;
-
+// Fog input
 uniform bool u_nglfogOn;
+uniform lowp float u_nglFogEnd;
+uniform lowp float u_nglFogFactor;
+uniform lowp float u_nglfogIntensityHandle;
 uniform lowp vec4 u_nglFogColor;
+
+lowp float v_nglFog;
 
 // local variables
 lowp vec4 _nglEmission = vec4(0.0);
 lowp vec4 _nglSpotLight = vec4(0.0);
-lowp vec4 _nglAmbient = vec4(0.0);
-lowp vec4 _nglDiffuse = vec4(0.0);
+lowp vec4 _nglAmbient = vec4(0.2);
+lowp vec4 _nglDiffuse = vec4(1.0);
 lowp vec4 _nglSpecular = vec4(0.0);
-lowp vec4 _nglLightF = vec4(1.0);
 lowp float _nglShineF = 1.0;
 lowp float _nglAlpha = 1.0;
 
@@ -43,120 +46,58 @@ void main() {
     
     // if not obj model
     if(1 == 1){
-        const float kGamma = 0.4545454;
-        const float kInverseGamma = 2.2;
-        
-        // vec3 viewFragmentDirection = normalize(v_ViewPosition);
-        vec3 viewNormal = normalize(v_ViewNormal);
-        // vec3 viewLightDirection = u_LightingParameters.xyz;
+        // vec4 objectColor  = texture2D(u_Texture, v_TextureCoord);
+        vec4 objectColor = texture2D(u_Texture, vec2(v_TextureCoord.x, 1.0 - v_TextureCoord.y)); // invert texture
+        lowp vec3 _nglViewEyeDirection = normalize(v_nglVEye);
+        lowp vec3 _nglLightDirection = normalize(v_nglLightDirection);
+        lowp vec3 viewNormal = normalize(v_ViewNormal);
 
-        vec4 diffuseColor = vec4(0.5, 0.5, 0.7, 1.0);
-//
-//        vec3 reflectedLightDirection = reflect(viewLightDirection, viewNormal);
-//        float specularStrength = max(0.0, dot(viewFragmentDirection, reflectedLightDirection));
+        //    Emissive
         
+        // _nglDiffuse = vec4(0.5, 0.5, 0.7, 1.0); // instead of texture if no texture
 
-        
-        //**************************************************
-        //    Global Effects
-        //**************************************************
-        
-        //*************************
-        //    Fog
-        
-//        addShaderElement(VSH_FOG, shaders.vertex);
-//        addShaderElement(FSH_FOG, shaders.fragment);
-        //*************************
+        // Phong : Ambient, Diffuse, Specular
+        // Ambient
+        _nglAmbient *= u_nglLightColor * v_nglLightLevel;
 
-        
-        //*************************
-        //    Shader Technique
-        //*************************
-        
-        // addShaderElement(FSH_FINAL, shaders.fragment);
-        
-        //**************************************************
-        //    Special Effects Using Lights
-        //**************************************************
-        
-        //*************************
-        //    Shininess
-        //*************************
-//            addShaderElement(FSH_SHININESS, shaders.fragment);
+        // Diffuse
+        lowp float _nglLightD = clamp(dot(viewNormal, _nglLightDirection), 0.0, 1.0); // 0.2: back face also has light
+        _nglDiffuse = u_nglLightColor * v_nglLightLevel * _nglLightD;
 
-        
-        //*************************
         //    Specular
-        //*************************
-//        {
-//            addShaderElement(FSH_SPECULAR_COLOR, shaders.fragment);
+        float specularPower = 16.0, specularStrength = 0.4;
+        vec3 reflectedLightDirection = reflect(-_nglLightDirection, viewNormal);
+        float specular = clamp( dot( _nglViewEyeDirection, reflectedLightDirection), 0.0, 1.0);
+        _nglSpecular = u_nglLightColor * v_nglLightLevel * specularStrength * pow(specular, specularPower);
 
-        
-        //*************************
-        //    Alpha Test
-        //*************************
-            // Alpha test is made right after the Light Mapping.
-            // addShaderElement(FSH_ALPHA_TEST, shaders.fragment);
-        
-        //**************************************************
-        //    Basic Effects
-        //**************************************************
-        
-        //*************************
-        //    Alpha
-        //*************************
-//        if (alphaEnabled)
-//        {
-//                addShaderElement(FSH_ALPHA, shaders.fragment);
-//        }
-        
-        //*************************
-        //    Ambient Illumination
-        //*************************
-        //    addShaderElement(FSH_AMBIENT_COLOR, shaders.fragment);
+        //    Shininess
+        // lowp float _nglShineD = max(dot(2.0 * viewNormal * _nglLightD - _nglLightDirection, _nglViewEyeDirection), 0.0);
 
-        //    Diffuse
-        // _nglDiffuse = texture2D(u_Texture, v_TextureCoord);
-        _nglDiffuse = texture2D(u_Texture, vec2(v_TextureCoord.x, 1.0 - v_TextureCoord.y)); // invert texture
-        //*************************
-        //    Emissive Illumination
-        //*************************
-//             addShaderElement(FSH_EMISSIVE_COLOR, shaders.fragment);
-        
-        //*************************
-        //    Light
-        //*************************
-        lowp vec3 _nglVEye = normalize(v_nglVEye);
-        lowp vec3 _nglVLight = normalize(v_nglVLight);
-        
-        vec3 nglNormal = viewNormal; // LINEAR_MAP
-        // nglNormal = normalize(_nglDiffuse.rgb * 2.0 - 1.0); // BUMP_MAP
-        // Phong
-        lowp float _nglLightD = max(dot(nglNormal, _nglVLight), 0.0) + 0.4; // 0.2: back face also has light
-        lowp float _nglShineD = max(dot(2.0 * nglNormal * _nglLightD - _nglVLight, _nglVEye), 0.0);
-        
-        _nglLightF = u_nglLightColor * v_nglLightLevel * _nglLightD;
-
-        // Specular
-//        _nglSpecular = u_nglLightColor * v_nglLightLevel; // u_nglSpecularColor
-//        _nglShineF = pow(_nglShineD, 10);
-        float spotDot = dot (-_nglVEye, normalize(v_nglVEyeD.xyz));
-        float spotCosCutoff = 0.4;
-        _nglSpotLight  = vec4(0.0);
-        if(u_flashLightOn && spotDot > spotCosCutoff){
-            _nglSpotLight  = vec4(0.8);
+        // flashLight
+        if(u_flashLightOn){
+            float spotSpecularPower = 12.0, spotSpecularStrength = 0.8;
+            vec3 spotLightDirection = normalize(v_nglVEyeD.xyz);
+            float spotDot = dot ( -_nglViewEyeDirection, spotLightDirection);
+            float spotCosCutoff = 0.95; // size, 0.8 - 1.0
+            if(spotDot > spotCosCutoff){
+                float spotSpecular = clamp( dot( -_nglViewEyeDirection, reflect(-spotLightDirection, viewNormal)), 0.0, 1.0);
+                _nglSpotLight  = u_nglLightColor * spotSpecularStrength * pow(spotDot, spotSpecularPower);
+            }
         }
-            
-        //    Base
-        gl_FragColor = _nglSpotLight + _nglEmission + _nglAmbient + _nglDiffuse * _nglLightF ;// + _nglSpecular * _nglShineF;
-//        gl_FragColor.a = _nglAlpha * _nglDiffuse.a;
 
+        gl_FragColor = _nglSpotLight + ( _nglDiffuse + _nglAmbient ) * objectColor + _nglSpecular;
+        
+        //    Alpha
+        //  gl_FragColor.a = _nglAlpha * _nglDiffuse.a;
+
+        //    Fog
         if(u_nglfogOn){
+            v_nglFog = clamp((u_nglFogEnd - v_ViewPointDistance) / u_nglFogFactor, 0.1, 1.0) * u_nglfogIntensityHandle;
             gl_FragColor = mix(u_nglFogColor, gl_FragColor, v_nglFog);
         }
         
         
-    } else { // obj model
+    } else { // obj mode
         // We support approximate sRGB gamma.
 //        const float kGamma = 0.4545454;
 //        const float kInverseGamma = 2.2;

@@ -27,6 +27,7 @@
     NGLShader * _shader;
     
     GLKMatrix4 _MVPMatrix;
+    GLKMatrix4 _modelViewMatrix;
     
     UIView *_view;
     
@@ -119,8 +120,9 @@
 
 - (void) update:(double) deltaTime {
 
-    GLKMatrix4 modelViewMatrix = [self modelMatrix];
-    _MVPMatrix = GLKMatrix4Multiply(_viewProjectionMatrix, modelViewMatrix);
+    GLKMatrix4 modelMatrix = [self modelMatrix];
+    _MVPMatrix = GLKMatrix4Multiply(_viewProjectionMatrix, modelMatrix);
+    _modelViewMatrix = GLKMatrix4Multiply(_viewMatrix, modelMatrix);
     
 }
 
@@ -137,6 +139,7 @@
     }
     
     glUniformMatrix4fv(_shader.mvpMatrixHandle, 1, GL_FALSE, _MVPMatrix.m);
+    glUniformMatrix4fv(_shader.mvMatrixHandle, 1, GL_FALSE, _modelViewMatrix.m);
     
     glUniform4f(_shader.lightingHandle, 1, 1, 1.0f, 1.0f);
     glUniform4f(_shader.materialHandle, 1.0f, 1.0f, 0.5f, .5f);
@@ -144,7 +147,8 @@
     
     // lighting
     GLKMatrix4 _mIMatrix = GLKMatrix4Transpose(self.orthoMatrix);
-    GLKMatrix4 _mvIMatrix = GLKMatrix4Multiply(_mIMatrix, _viewMatrix);
+    GLKMatrix4 _mvIMatrix = GLKMatrix4Multiply(_mIMatrix, _cameraModelMatrix);
+    // _mvIMatrix = GLKMatrix4Multiply(_viewMatrix, _mvIMatrix);
     glUniform3fv(_shader.scaleHandle, 1, self.scale.v);
     glUniformMatrix4fv(_shader.modelInverseMatrixHandle, 1, GL_FALSE, _mIMatrix.m);
     glUniformMatrix4fv(_shader.modelViewInverseMatrixHandle, 1, GL_FALSE, _mvIMatrix.m);
@@ -153,7 +157,7 @@
     
     // lighting debug code
 //        GLKVector4 u_nglLightPosition = GLKVector4Make(2.0f, 2.0f, 3.0f, 1.0f);
-//        glUniform4fv(_shader.lightPositionHandle, 1, u_nglLightPosition.v);
+//        glUniform4fv(_shader.lightDirectionHandle, 1, u_nglLightPosition.v);
 //        glUniform4fv(_shader.lightColorHandle, 1, GLKVector4Make(1.0f, 240.0/255.0f, 210.0f/255.0f, 1.0f).v);
 //        glUniform1f(_shader.lightAttenuationHandle, 10.0f); // intensity, 0-1;
 //    

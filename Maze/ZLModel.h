@@ -30,9 +30,24 @@
 @property (nonatomic) GLKMatrix4 viewProjectionMatrix;
 
 /*!
- *                    The final MODEL_VIEW matrix, camera matrix for set lighting
+ *                    The VIEW matrix
  */
 @property (nonatomic) GLKMatrix4 viewMatrix;
+
+/*!
+ *                    The final camera model matrix, camera matrix for set lighting
+ */
+@property (nonatomic) GLKMatrix4 cameraModelMatrix;
+
+///*!
+// *                    The final orthogonal MODEL_INVERSE matrix (doesn't include the scale).
+// */
+//@property (nonatomic, readonly) GLKMatrix4 modelInverseMatrix;
+//
+///*!
+// *                    The final orthogonal MODEL_VIEW_INVERSE matrix (doesn't include the scale).
+// */
+//@property (nonatomic, readonly) GLKMatrix4 modelViewInverse;
 
 @end
 
