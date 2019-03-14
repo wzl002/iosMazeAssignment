@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF0CB2B6223A024D00C45BE3 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DF0CB2B5223A024D00C45BE3 /* icon.png */; };
 		DF2CB4D02221F20D00692105 /* ZLModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4CF2221F20D00692105 /* ZLModel.mm */; };
 		DF2CB4D32221F25100692105 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4D22221F25100692105 /* Wall.m */; };
 		DF5FC1B32235A16600C06A6D /* floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B22235A16600C06A6D /* floor.jpg */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF0CB2B5223A024D00C45BE3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Assets/icon.png; sourceTree = "<group>"; };
 		DF2CB4CF2221F20D00692105 /* ZLModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZLModel.mm; sourceTree = "<group>"; };
 		DF2CB4D12221F22800692105 /* ZLModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZLModel.h; sourceTree = "<group>"; };
 		DF2CB4D22221F25100692105 /* Wall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				DF5FC1B52235A41A00C06A6D /* MazeCreater */,
 				DFDC8A9C222F1B2200F5F499 /* NGLEngine */,
 				DFA22282220B7F06002F22F9 /* Info.plist */,
+				DF0CB2B5223A024D00C45BE3 /* icon.png */,
 				DF5FC1B82235BF5300C06A6D /* MazeMinmap */,
 				DFA222B1220B89F9002F22F9 /* GLESRenderer.cpp */,
 				DFA222AF220B89F9002F22F9 /* GLESRenderer.hpp */,
@@ -403,6 +406,7 @@
 				DFFC1173223228CE001DB2CF /* west.jpg in Resources */,
 				DFFC1171223228CE001DB2CF /* north.jpg in Resources */,
 				DFFC1170223228CE001DB2CF /* south.jpg in Resources */,
+				DF0CB2B6223A024D00C45BE3 /* icon.png in Resources */,
 				DFA2227E220B7F06002F22F9 /* Assets.xcassets in Resources */,
 				DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */,
 				DFFC116B2231F71D001DB2CF /* Shader.fragsh in Resources */,

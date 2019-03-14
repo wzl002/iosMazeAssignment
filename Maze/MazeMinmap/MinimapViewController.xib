@@ -16,12 +16,12 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view alpha="0.80000000000000004" contentMode="center" id="iN0-l3-epB">
+        <view contentMode="center" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
             <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="130.40000000000001" y="111.99400299850076"/>
         </view>
     </objects>
 </document>

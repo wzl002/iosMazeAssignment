@@ -3,7 +3,7 @@
 //  Maze
 //
 //  Created by Zilong Wang on 2019/3/10.
-//  Copyright © 2019年 bcit. All rights reserved.
+//  Copyright © 2019 bcit. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -19,6 +19,8 @@
     GLKVector3 _rotation;
     CAShapeLayer * _circleLayer;
     
+    UIView *containerView;
+    
     float oWidth, oHeight, unit;
 }
 
@@ -30,9 +32,19 @@
 {
     [super viewDidLoad];
     
-    oWidth = self.view.frame.size.width/2;
-    oHeight = self.view.frame.size.height/2;
+    UIView * pView = self.parentViewController.view;
+    oWidth = pView.bounds.size.width/2;
+    oHeight = pView.bounds.size.height/2;
     unit = oWidth/5;
+
+    containerView = [[UIView alloc] initWithFrame:CGRectMake(
+                                     20.0f,
+                                     oHeight - oWidth,
+                                     pView.frame.size.width - 40,
+                                     pView.frame.size.width )];
+
+    [containerView setBackgroundColor:[[UIColor alloc] initWithRed:0.3f green:0.3f blue:0.3f alpha:0.68f] ];
+    [self.view addSubview:containerView];
 }
 
 - (void) didMoveToParentViewController:(UIViewController *)parent
@@ -124,17 +136,17 @@
 
 - (void) drawRow:(int) row col:(int) col
 {
-    NSLog(@"draw row at %d : %d => %f : %f ow = %f", row, col, oWidth + row * unit, oHeight + col * unit, oWidth);
+    // NSLog(@"draw row at %d : %d => %f : %f ow = %f", row, col, oWidth + row * unit, oHeight + col * unit, oWidth);//
     
     UIView* rowView = [[UIView alloc] initWithFrame:CGRectMake(oWidth + row * unit, oHeight - col * unit, unit, 8)];
-    rowView.backgroundColor = [UIColor blackColor];
+    rowView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:rowView];
 }
 
 - (void) drawCol:(int) row col:(int) col
 {
     UIView* colView = [[UIView alloc] initWithFrame:CGRectMake(oWidth + row * unit, oHeight - col * unit, 8, unit)];
-    colView.backgroundColor = [UIColor blackColor];
+    colView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:colView];
 }
 

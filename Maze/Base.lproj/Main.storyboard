@@ -92,6 +92,31 @@
                                     <action selector="swicthDayNight:" destination="BYZ-38-t0r" eventType="valueChanged" id="fiC-hG-gna"/>
                                 </connections>
                             </switch>
+                            <view alpha="0.68000000000000005" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcG-Yq-nsB">
+                                <rect key="frame" x="37.5" y="529" width="300" height="128"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbx-TD-So2">
+                                        <rect key="frame" x="14.5" y="33.5" width="268" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="268" id="4SI-SQ-813"/>
+                                            <constraint firstAttribute="height" constant="61" id="EqY-HU-SAB"/>
+                                        </constraints>
+                                        <string key="text">Go Forward   (Long Press)
+Look Around  (Pan)
+Minimap (Two Fingers Double-click)</string>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="GEO-ki-5xN"/>
+                                    <constraint firstAttribute="height" constant="128" id="Ssc-Fw-Ea5"/>
+                                    <constraint firstItem="rbx-TD-So2" firstAttribute="leading" secondItem="bcG-Yq-nsB" secondAttribute="leading" constant="14.5" id="m8S-1W-Gcq"/>
+                                    <constraint firstItem="rbx-TD-So2" firstAttribute="centerY" secondItem="bcG-Yq-nsB" secondAttribute="centerY" id="sAD-SC-CF8"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -99,11 +124,13 @@
                             <constraint firstItem="Vki-BV-pAR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="54L-ym-Gru"/>
                             <constraint firstItem="ghE-1H-inq" firstAttribute="leading" secondItem="eCR-x8-xm2" secondAttribute="trailing" constant="14" id="7HA-HG-fCz"/>
                             <constraint firstItem="Vki-BV-pAR" firstAttribute="leading" secondItem="6SB-Zt-Et3" secondAttribute="trailing" constant="-109" id="I5z-xl-3zW"/>
+                            <constraint firstItem="bcG-Yq-nsB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J5v-MF-0cW"/>
                             <constraint firstItem="GgH-hn-fVC" firstAttribute="leading" secondItem="CCp-4j-bk1" secondAttribute="leading" id="JvC-d7-N0o"/>
                             <constraint firstItem="0IB-8E-84O" firstAttribute="top" secondItem="6SB-Zt-Et3" secondAttribute="bottom" constant="8" id="LDG-sm-XMx"/>
                             <constraint firstItem="GgH-hn-fVC" firstAttribute="centerY" secondItem="1pW-tq-0Jm" secondAttribute="centerY" id="Mdr-Ph-FoX"/>
                             <constraint firstItem="n0y-aq-cRc" firstAttribute="centerY" secondItem="6SB-Zt-Et3" secondAttribute="centerY" id="Mjs-df-urn"/>
                             <constraint firstItem="0IB-8E-84O" firstAttribute="centerX" secondItem="6SB-Zt-Et3" secondAttribute="centerX" id="O4S-6b-qaH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bcG-Yq-nsB" secondAttribute="bottom" constant="10" id="RIU-Jx-kAZ"/>
                             <constraint firstItem="n0y-aq-cRc" firstAttribute="leading" secondItem="6SB-Zt-Et3" secondAttribute="trailing" constant="19" id="adC-be-wfZ"/>
                             <constraint firstItem="eCR-x8-xm2" firstAttribute="centerY" secondItem="vCo-OW-8ZI" secondAttribute="centerY" id="bUa-iR-gaj"/>
                             <constraint firstItem="6SB-Zt-Et3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="cZG-aA-Cjo"/>
