@@ -32,6 +32,7 @@
         // uniform
         self.mvpMatrixHandle = [self uniformLocation:@ "u_ModelViewProjection"];
         self.mvMatrixHandle = [self uniformLocation:@"u_ModelView"];
+        self.normalMatrixHandle = [self uniformLocation:@"u_NormalMatrix"];
         self.materialHandle = [self uniformLocation:@"u_MaterialParameters"];
         self.lightingHandle = [self uniformLocation:@"u_LightingParameters"];
         self.transparencyHandle = [self uniformLocation:@"u_transparency"];
@@ -58,6 +59,7 @@
         
         // flash light
         self.flashLightOnHandle = [self uniformLocation:@"u_flashLightOn"];
+        self.flashLightDirectionHandle = [self uniformLocation:@"u_flashLightDirection"];
         
     }
     return self;

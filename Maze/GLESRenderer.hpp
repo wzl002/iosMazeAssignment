@@ -13,7 +13,7 @@ public:
     GLuint LoadProgram(const char *vertShaderSrc, const char *fragShaderSrc);
     
     int GenCube(float scale, float **vertices, float **normals,
-                float **texCoords, int **indices);
+                float **texCoords, int **indices, int *numVerts);
     
 };
 

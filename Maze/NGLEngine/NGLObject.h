@@ -10,13 +10,13 @@
 #define NGLObject_h
 
 #import <GLKit/GLKit.h>
+#import "NGLShader.h"
 
 @interface NGLObject : NSObject
 
-@property (nonatomic) int tag;
-
 @property (nonatomic, copy) NSString *name;
 
+@property (nonatomic, weak) NGLShader * shader;
 
 @property (nonatomic) GLKVector3 position;
 
@@ -24,25 +24,42 @@
 
 @property (nonatomic) GLKVector3 rotation;
 
+@property (nonatomic) NSString * textureImage;
 
-/*! MODEL MATRIX: The transformations happen in the order: scales -> rotations -> translations.
- */
-@property (nonatomic) GLKMatrix4 modelMatrix;
+// set Matrices
 
-/*!
- *                    This is the orthogonal part of the final matrix. It contains information about the
- *                    object's rotation and translation, but not the scale. This is the orthogonal
- *                    portion of the MODEL MATRIX.
- */
-@property (nonatomic) GLKMatrix4 orthoMatrix;
+@property (nonatomic) GLKMatrix4 viewProjectionMatrix;
 
-/*!
- *                    Defines a target of look at routine. At every render cycle, this object will perform
- *                    a lookAt routine with the specified target. The lookAt affects rotations in X and Y
- *                    axis. Any other rotation commands will be ignored to the final result.
- *                    The lookAt routine doesn't affect the absolute rotation values.
- */
-@property (nonatomic, assign) NGLObject *lookAtTarget;
+@property (nonatomic) GLKMatrix4 viewMatrix;
+
+// get Matrices
+
+@property (nonatomic, readonly) GLKMatrix4 modelMatrix;
+
+@property (nonatomic, readonly) GLKMatrix4 orthoMatrix;
+
+@property (nonatomic, readonly) GLKMatrix4 rotationMatrix;
+
+
+@property (nonatomic, readonly) GLKMatrix4 modelViewProjectionMatrix;
+
+@property (nonatomic, readonly) GLKMatrix4 modelViewMatrix;
+
+@property (nonatomic, readonly) GLKMatrix4 normalMatrix;
+
+
+
+- (id) initWithShader:(NGLShader *)shader;
+
+- (void)bindTexture;
+
+// override functions
+
+- (void)loadModel;
+
+- (void)update:(double)deltaTime;
+
+- (void)draw;
 
 
 @end

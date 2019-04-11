@@ -18,8 +18,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D8t-rV-d6w">
+                                <rect key="frame" x="37.5" y="252" width="300" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="ech-2u-3XD"/>
+                                    <constraint firstAttribute="width" constant="300" id="i8L-8E-MS7"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Assignment 3  ">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="36" name="Arial-BoldItalicMT"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GfM-5T-95v" userLabel="Maze">
+                                <rect key="frame" x="37.5" y="313.5" width="300" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="GWj-aQ-jj7"/>
+                                    <constraint firstAttribute="width" constant="300" id="qcH-aS-I3f"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Maze">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="32" name="Arial-BoldMT"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK0-dT-0VN">
-                                <rect key="frame" x="68.5" y="428.5" width="238" height="32"/>
+                                <rect key="frame" x="68.5" y="400" width="238" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Z1p-x7-kMj"/>
                                     <constraint firstAttribute="width" constant="238" id="nZ7-B2-XKN"/>
@@ -34,30 +68,15 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D8t-rV-d6w">
-                                <rect key="frame" x="37.5" y="293.5" width="300" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="ech-2u-3XD"/>
-                                    <constraint firstAttribute="width" constant="300" id="i8L-8E-MS7"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Assignment_2  Maze">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="32" name="Arial-BoldMT"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="GfM-5T-95v" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Beb-nK-6ed"/>
+                            <constraint firstItem="aK0-dT-0VN" firstAttribute="top" secondItem="GfM-5T-95v" secondAttribute="bottom" constant="46.5" id="Czi-wc-bxb"/>
                             <constraint firstItem="aK0-dT-0VN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="e7S-eA-mgP"/>
+                            <constraint firstItem="GfM-5T-95v" firstAttribute="top" secondItem="D8t-rV-d6w" secondAttribute="bottom" constant="19.5" id="lqG-QZ-mNN"/>
+                            <constraint firstItem="GfM-5T-95v" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mAy-ez-O2X"/>
                             <constraint firstItem="D8t-rV-d6w" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="q23-oP-gme"/>
-                            <constraint firstItem="D8t-rV-d6w" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="vuB-8M-JeL"/>
-                            <constraint firstItem="aK0-dT-0VN" firstAttribute="top" secondItem="D8t-rV-d6w" secondAttribute="bottom" constant="55" id="wMn-q0-aUO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

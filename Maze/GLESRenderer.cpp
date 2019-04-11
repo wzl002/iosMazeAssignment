@@ -112,7 +112,7 @@ GLuint GLESRenderer::LoadProgram(const char *vertShaderSrc, const char *fragShad
 
 
 int GLESRenderer::GenCube(float scale, float **vertices, float **normals,
-                          float **texCoords, int **indices)
+                          float **texCoords, int **indices, int *numVerts)
 {
     int i;
     int numVertices = 24;
@@ -250,5 +250,7 @@ int GLESRenderer::GenCube(float scale, float **vertices, float **normals,
         memcpy ( *indices, cubeIndices, sizeof ( cubeIndices ) );
     }
     
+    if (numVerts != NULL)
+        *numVerts = numVertices;
     return numIndices;
 }

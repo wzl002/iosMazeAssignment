@@ -132,6 +132,13 @@ static void nglDefineWrap(NGLTextureRepeat repeat, GLint *wrap)
 #pragma mark Private Category
 
 @interface NGLTextureCache ()
+{
+@private
+    // Textures
+    NSMutableArray            *_fileNames;
+    GLuint                    *_textures;
+    int                        _tCount;
+}
 
 // Update this core with a new texture.
 - (void) updateTexturesWith:(GLuint)newTexture;

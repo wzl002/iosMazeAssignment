@@ -25,13 +25,7 @@
 
 
 @interface NGLTextureCache : NSObject
-{
-@private
-    // Textures
-    NSMutableArray            *_fileNames;
-    GLuint                    *_textures;
-    int                        _tCount;
-}
+
 
 /*!
  *                    Loads, parses and constructs a texture map based on a #NGLTexture#.

@@ -1,0 +1,21 @@
+
+uniform mat4 u_ModelView;
+uniform mat4 u_ModelViewProjection;
+
+attribute vec4 a_Position;
+attribute vec3 a_Normal;
+attribute vec2 a_TextureCoord;
+attribute vec2 a_Verctor2Test;
+
+varying vec3 v_ViewPosition;
+varying vec3 v_ViewNormal;
+varying vec2 v_TextureCoord;
+varying vec2 v_Verctor2Test;
+
+void main() {
+    v_ViewPosition = (u_ModelView * a_Position).xyz;
+    v_ViewNormal = normalize((u_ModelView * vec4(a_Normal, 0.0)).xyz);
+    v_TextureCoord = a_TextureCoord;
+    v_Verctor2Test = a_Verctor2Test;
+    gl_Position = u_ModelViewProjection * a_Position;
+}

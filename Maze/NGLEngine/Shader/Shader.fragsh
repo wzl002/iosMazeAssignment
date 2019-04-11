@@ -8,6 +8,7 @@ uniform vec4 u_MaterialParameters;
 uniform float u_transparency;
 
 uniform bool u_flashLightOn;
+uniform vec4 u_flashLightDirection;
 
 varying vec3 v_ViewPosition;
 varying vec3 v_ViewNormal;
@@ -18,10 +19,9 @@ uniform lowp vec4 u_nglLightColor;
 
 uniform mediump float u_nglShininess;
 
-varying highp vec3 v_nglVEye;
-varying highp vec4 v_nglVEyeD;
-varying highp vec3 v_nglNormalDirection;
-varying highp vec3 v_nglLightDirection;
+varying highp vec3 v_ToView;
+varying highp vec3 v_CameraDirection;
+varying highp vec3 v_ToLightDirection;
 varying lowp float v_nglLightLevel;
 
 // Fog input
@@ -48,8 +48,8 @@ void main() {
     if(1 == 1){
         // vec4 objectColor  = texture2D(u_Texture, v_TextureCoord);
         vec4 objectColor = texture2D(u_Texture, vec2(v_TextureCoord.x, 1.0 - v_TextureCoord.y)); // invert texture
-        lowp vec3 _nglViewEyeDirection = normalize(v_nglVEye);
-        lowp vec3 _nglLightDirection = normalize(v_nglLightDirection);
+        lowp vec3 toViewDirection = normalize(v_ToView);
+        lowp vec3 toLightDirection = normalize(v_ToLightDirection);
         lowp vec3 viewNormal = normalize(v_ViewNormal);
 
         //    Emissive
@@ -61,32 +61,31 @@ void main() {
         _nglAmbient *= u_nglLightColor * v_nglLightLevel;
 
         // Diffuse
-        lowp float _nglLightD = clamp(dot(viewNormal, _nglLightDirection), 0.0, 1.0); // 0.2: back face also has light
+        lowp float _nglLightD = clamp(dot(viewNormal, toLightDirection), 0.0, 1.0);
         _nglDiffuse = u_nglLightColor * v_nglLightLevel * _nglLightD;
 
         //    Specular
-        float specularPower = 16.0, specularStrength = 0.4;
-        vec3 reflectedLightDirection = reflect(-_nglLightDirection, viewNormal);
-        float specular = clamp( dot( _nglViewEyeDirection, reflectedLightDirection), 0.0, 1.0);
+        float specularPower = 100.0, specularStrength = 0.8;
+        vec3 reflectedLightDirection = reflect(-toLightDirection, viewNormal);
+        float specular = clamp( dot( toViewDirection, reflectedLightDirection), 0.0, 1.0);
         _nglSpecular = u_nglLightColor * v_nglLightLevel * specularStrength * pow(specular, specularPower);
 
         //    Shininess
-        // lowp float _nglShineD = max(dot(2.0 * viewNormal * _nglLightD - _nglLightDirection, _nglViewEyeDirection), 0.0);
+        // lowp float _nglShineD = max(dot(2.0 * viewNormal * _nglLightD - toLightDirection, toViewDirection), 0.0);
 
         // flashLight
         if(u_flashLightOn){
-            float spotSpecularPower = 12.0, spotSpecularStrength = 0.8;
-            vec3 spotLightDirection = normalize(v_nglVEyeD.xyz);
-            float spotDot = dot ( -_nglViewEyeDirection, spotLightDirection);
+            float spotSpecularPower = 92.0, spotSpecularStrength = 0.8;
+            vec3 spotLightDirection = normalize(v_CameraDirection);
+            float spotDot = dot ( -toViewDirection, spotLightDirection);
             float spotCosCutoff = 0.95; // size, 0.8 - 1.0
             if(spotDot > spotCosCutoff){
-                float spotSpecular = clamp( dot( -_nglViewEyeDirection, reflect(-spotLightDirection, viewNormal)), 0.0, 1.0);
                 _nglSpotLight  = u_nglLightColor * spotSpecularStrength * pow(spotDot, spotSpecularPower);
             }
         }
 
-        gl_FragColor = _nglSpotLight + ( _nglDiffuse + _nglAmbient ) * objectColor + _nglSpecular;
-        
+        gl_FragColor = _nglSpotLight + ( _nglDiffuse + _nglAmbient + _nglSpecular ) * objectColor;
+        gl_FragColor.a = 1.0;
         //    Alpha
         //  gl_FragColor.a = _nglAlpha * _nglDiffuse.a;
 

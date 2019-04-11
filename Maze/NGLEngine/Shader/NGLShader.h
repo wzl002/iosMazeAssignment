@@ -21,6 +21,7 @@
 
 @property (nonatomic) GLint mvpMatrixHandle;
 @property (nonatomic) GLint mvMatrixHandle;
+@property (nonatomic) GLint normalMatrixHandle;
 @property (nonatomic) GLint lightingHandle;
 @property (nonatomic) GLint materialHandle;
 @property (nonatomic) GLint texSampler2DHandle;
@@ -43,6 +44,7 @@
 @property (nonatomic) GLint fogIntensityHandle;
 
 @property (nonatomic) GLint flashLightOnHandle;
+@property (nonatomic) GLint flashLightDirectionHandle;
 
 @end
 

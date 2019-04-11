@@ -62,7 +62,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pW-tq-0Jm" userLabel="Switch_Fog">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1pW-tq-0Jm" userLabel="Switch_Fog">
                                 <rect key="frame" x="62" y="158" width="51" height="31"/>
                                 <connections>
                                     <action selector="switchFog:" destination="BYZ-38-t0r" eventType="valueChanged" id="IER-D5-5tJ"/>
@@ -93,17 +93,21 @@
                                 </connections>
                             </switch>
                             <view alpha="0.68000000000000005" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcG-Yq-nsB">
-                                <rect key="frame" x="37.5" y="529" width="300" height="128"/>
+                                <rect key="frame" x="25" y="489" width="325" height="168"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbx-TD-So2">
-                                        <rect key="frame" x="14.5" y="33.5" width="268" height="61"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbx-TD-So2">
+                                        <rect key="frame" x="14.5" y="3" width="280" height="162"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="268" id="4SI-SQ-813"/>
-                                            <constraint firstAttribute="height" constant="61" id="EqY-HU-SAB"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="162" id="1zk-cV-yHJ"/>
+                                            <constraint firstAttribute="width" constant="280" id="4SI-SQ-813"/>
                                         </constraints>
-                                        <string key="text">Go Forward   (Long Press)
+                                        <string key="text">Model Edit :
+(Three Fingers Single Tap)
+
+Go Forward   (Long Press)
 Look Around  (Pan)
-Minimap (Two Fingers Double-click)</string>
+Reset   (Double Tap)
+Minimap (Two Fingers Double Tap)</string>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -111,10 +115,36 @@ Minimap (Two Fingers Double-click)</string>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="GEO-ki-5xN"/>
-                                    <constraint firstAttribute="height" constant="128" id="Ssc-Fw-Ea5"/>
+                                    <constraint firstAttribute="width" constant="325" id="GEO-ki-5xN"/>
+                                    <constraint firstAttribute="height" constant="168" id="Ssc-Fw-Ea5"/>
                                     <constraint firstItem="rbx-TD-So2" firstAttribute="leading" secondItem="bcG-Yq-nsB" secondAttribute="leading" constant="14.5" id="m8S-1W-Gcq"/>
                                     <constraint firstItem="rbx-TD-So2" firstAttribute="centerY" secondItem="bcG-Yq-nsB" secondAttribute="centerY" id="sAD-SC-CF8"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.68000000715255737" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWv-hd-90v" userLabel="DogView">
+                                <rect key="frame" x="-305" y="522" width="305" height="128"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DY7-Jt-MeD">
+                                        <rect key="frame" x="14.5" y="8" width="280" height="112"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="112" id="oMI-sc-4SZ"/>
+                                            <constraint firstAttribute="width" constant="280" id="qvH-26-Cc1"/>
+                                        </constraints>
+                                        <string key="text">Exit Model Edit (Three Fingers Single Tap)
+Move (One Finger Pan)
+Rotate (Two Finger Pan)
+Rescale (Pinch)</string>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="ZlW-zs-n3h"/>
+                                    <constraint firstItem="DY7-Jt-MeD" firstAttribute="top" secondItem="JWv-hd-90v" secondAttribute="top" constant="8" id="aKD-MF-HVs"/>
+                                    <constraint firstAttribute="height" constant="128" id="o9D-kV-EBa"/>
+                                    <constraint firstItem="DY7-Jt-MeD" firstAttribute="leading" secondItem="JWv-hd-90v" secondAttribute="leading" constant="14.5" id="z2Z-Ac-gdD"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -130,8 +160,10 @@ Minimap (Two Fingers Double-click)</string>
                             <constraint firstItem="GgH-hn-fVC" firstAttribute="centerY" secondItem="1pW-tq-0Jm" secondAttribute="centerY" id="Mdr-Ph-FoX"/>
                             <constraint firstItem="n0y-aq-cRc" firstAttribute="centerY" secondItem="6SB-Zt-Et3" secondAttribute="centerY" id="Mjs-df-urn"/>
                             <constraint firstItem="0IB-8E-84O" firstAttribute="centerX" secondItem="6SB-Zt-Et3" secondAttribute="centerX" id="O4S-6b-qaH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JWv-hd-90v" secondAttribute="bottom" constant="17" id="QLl-zK-Ynu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bcG-Yq-nsB" secondAttribute="bottom" constant="10" id="RIU-Jx-kAZ"/>
                             <constraint firstItem="n0y-aq-cRc" firstAttribute="leading" secondItem="6SB-Zt-Et3" secondAttribute="trailing" constant="19" id="adC-be-wfZ"/>
+                            <constraint firstItem="JWv-hd-90v" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-305" id="b7l-C0-osd"/>
                             <constraint firstItem="eCR-x8-xm2" firstAttribute="centerY" secondItem="vCo-OW-8ZI" secondAttribute="centerY" id="bUa-iR-gaj"/>
                             <constraint firstItem="6SB-Zt-Et3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="cZG-aA-Cjo"/>
                             <constraint firstItem="eCR-x8-xm2" firstAttribute="leading" secondItem="vCo-OW-8ZI" secondAttribute="trailing" constant="19" id="dlH-uE-h3A"/>
@@ -147,6 +179,8 @@ Minimap (Two Fingers Double-click)</string>
                     </view>
                     <connections>
                         <outlet property="_fogIntensityText" destination="ghE-1H-inq" id="EiK-A5-2I9"/>
+                        <outlet property="describeView" destination="bcG-Yq-nsB" id="Dgo-CX-aiP"/>
+                        <outlet property="modelEditDescribeView" destination="JWv-hd-90v" id="27s-SS-Ujz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "NGLObject.h"
+#import "NGLTextureCache.h"
 
 @interface NGLObject()
-
+{
+    int _textureCount;
+    NGLTextureCache * _textures;
+    NSString * _textureImage;
+}
 
 @end
 
 @implementation NGLObject
+
+@dynamic textureImage, modelMatrix, orthoMatrix, rotationMatrix, modelViewProjectionMatrix, modelViewMatrix, normalMatrix;
 
 #pragma mark Properties
 
@@ -27,86 +34,124 @@
 
 - (GLKMatrix4) orthoMatrix
 {
-    // Processes the lookAt routine, if exist.
-    if (_lookAtTarget != nil)
-    {
-        //    [self lookAtObject:_lookAtTarget];
-    }
-    
     GLKMatrix4 modelMatrix = GLKMatrix4Identity;
     modelMatrix = GLKMatrix4Translate(modelMatrix, self.position.x, self.position.y, self.position.z);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.x), 1.0, 0.0, 0.0 );
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.y), 0.0, 1.0, 0.0 );
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(self.rotation.z), 0.0, 0.0, 1.0 );
     
+    modelMatrix = GLKMatrix4Multiply(modelMatrix, [self rotationMatrix]);
     return modelMatrix;
+}
+
+// rotate around axis
+- (GLKMatrix4) rotationMatrix
+{
+
+    bool isInvertible;
+    GLKMatrix4 rotMatrix = GLKMatrix4Identity;
+    GLKVector3 xAxis = GLKMatrix4MultiplyVector3(GLKMatrix4Invert(rotMatrix, &isInvertible), GLKVector3Make(1, 0, 0));
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.x), xAxis.x, xAxis.y, xAxis.z);
+    GLKVector3 yAxis = GLKMatrix4MultiplyVector3(GLKMatrix4Invert(rotMatrix, &isInvertible),  GLKVector3Make(0, 1, 0));
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.y), yAxis.x, yAxis.y, yAxis.z);
+    GLKVector3 zAxis = GLKMatrix4MultiplyVector3(GLKMatrix4Invert(rotMatrix, &isInvertible), GLKVector3Make(0, 0, 1));
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.z), zAxis.x, zAxis.y, zAxis.z);
+    
+    return rotMatrix;
+}
+
+- (GLKMatrix4) modelViewProjectionMatrix
+{
+    return GLKMatrix4Multiply(_viewProjectionMatrix, self.modelMatrix);
+}
+
+- (GLKMatrix4) modelViewMatrix
+{
+    return GLKMatrix4Multiply(_viewMatrix, self.modelMatrix);
+}
+
+- (GLKMatrix4) normalMatrix
+{
+    return GLKMatrix4InvertAndTranspose(self.modelViewMatrix, NULL);
+}
+
+// rotate around self, Temporarily Abandoned
+- (GLKMatrix4) selfRotationMatrix
+{
+    GLKMatrix4 rotMatrix = GLKMatrix4Identity;
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.x), 1.0, 0.0, 0.0 );
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.y), 0.0, 1.0, 0.0 );
+    rotMatrix = GLKMatrix4Rotate(rotMatrix, GLKMathDegreesToRadians(self.rotation.z), 0.0, 0.0, 1.0 );
+    return rotMatrix;
 }
 
 #pragma mark -
 #pragma mark Constructors
-//**************************************************
-//    Constructors
-//**************************************************
 
-- (id) init
+- (id) initWithShader:(NGLShader *) shader
 {
-    if ((self = [super init]))
+    if ((self = [self init]))
     {
-
-        _position = GLKVector3Make(0, 0, 0);
-        _rotation = GLKVector3Make(0, 0, 0);
-        _scale = GLKVector3Make(1.0, 1.0, 1.0);
-        
-        // Defines no lookAt target.
-        _lookAtTarget = nil;
+        _shader = shader;
+        [self loadModel];
     }
     
     return self;
 }
 
-
-#pragma mark -
-#pragma mark Self Public Methods
-
-- (void) unimplement_lookAtObject:(NGLObject *)object
+- (instancetype)init
 {
-    // Calculates the distances between objects's pivots.
-    GLKVector3 distance = (GLKVector3){object.position.x - self.position.x, object.position.y - self.position.y, object.position.z - self.position.z};
-    
-    [self unimplement_lookAtVector:distance];
-}
-
-- (void) unimplement_lookAtPointX:(float)xNum toY:(float)yNum toZ:(float)zNum
-{
-    // Calculates the distances between points.
-    GLKVector3 distance = (GLKVector3){xNum - self.position.x, yNum - self.position.y, zNum - self.position.z};
-    
-    [self unimplement_lookAtVector:distance];
-}
-
-- (void) unimplement_lookAtVector:(GLKVector3)vector
-{
-    // This approach saves the Z rotation and can be used rather than the matrix formed
-    // with the Front, Up and Side vector
-    
-    // Using Pythagoras Theorem, finds the projection magnitude on the plane XZ.
-    // This will represent the adjacent side to X rotation (also known as roll or bank).
-    float mag = sqrtf(vector.x * vector.x + vector.z * vector.z);
-    
-    // Applies the simple SOH-CAH-TOA formulas to find the angles in a triangle.
-    // Here in both cases, use the Opposite and Adjacent sides.
-    // The atan2f is better because can work in the four quadrants, not only 2 like atanf.
-    float rotateX = GLKMathRadiansToDegrees(atan2f(-vector.y, mag));
-    float rotateY = GLKMathRadiansToDegrees(atan2f(vector.x, vector.z));
-    
-    // Adds the rotation into the quaternion.
-    // [_quat rotateByEuler:(GLKVector3){rotateX, rotateY, _rotation.z} mode:NGLAddModeSet];
-
+    if ((self = [super init]))
+    {
+        _position = GLKVector3Make(0, 0, 0);
+        _rotation = GLKVector3Make(0, 0, 0);
+        _scale = GLKVector3Make(1.0, 1.0, 1.0);
+        _textureCount = -1;
+    }
+    return self;
 }
 
 - (void) dealloc
 {
     _name = nil;
+    _textures = nil;
+    _textureImage = nil;
 }
+
+#pragma mark -
+#pragma mark Public function
+
+- (void)setTextureImage:(NSString *)fileName{
+    if (fileName != _textureImage || _textureCount == -1)
+    {
+        _textureImage = fileName;
+        if(_textures == nil){
+            _textures = [[NGLTextureCache alloc] init];
+        }
+        NGLTexture *texture = [[NGLTexture alloc] initWithFilePath:fileName];
+        [_textures addTexture:(NGLTexture *) texture];
+        
+        _textureCount = [_textures getLastUnit];
+    }
+}
+
+- (void)bindTexture
+{
+    if(_textureCount != -1){
+        [_textures bindUnit:_textureCount toLocation:_shader.texSampler2DHandle];
+    }
+}
+
+// abstruct functions
+
+- (void)loadModel{
+    
+}
+
+- (void)update:(double)deltaTime{
+    
+}
+
+- (void)draw {
+    
+}
+
 
 @end

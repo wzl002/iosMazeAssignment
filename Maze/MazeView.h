@@ -11,7 +11,7 @@
 
 #import <GLKit/GLKit.h>
 #import <Foundation/Foundation.h>
-
+#import "Dog.h"
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import "Wall.h"
@@ -30,6 +30,9 @@
 
 - (void)draw:(CGRect)drawRect;
 
+- (Dog * )getEnemy;
+
+- (NSMutableArray<Wall *> *)getWalls;
 
 #pragma mark interactions
 
@@ -46,6 +49,7 @@
 - (void) lookAround:(CGPoint) translation isEnd:(Boolean)isEnd;
 
 - (void) resetCamera;
+
 
 @end
 

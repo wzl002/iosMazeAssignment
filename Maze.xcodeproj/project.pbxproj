@@ -7,9 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF0962F4223DAE4B0013EB43 /* NGLCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0962F3223DAE4B0013EB43 /* NGLCamera.m */; };
+		DF0B506D225E9DD9005620CA /* Dog.obj in Resources */ = {isa = PBXBuildFile; fileRef = DF0B506A225E9DD9005620CA /* Dog.obj */; };
+		DF0B506E225E9DD9005620CA /* Dog.mtl in Resources */ = {isa = PBXBuildFile; fileRef = DF0B506B225E9DD9005620CA /* Dog.mtl */; };
+		DF0B506F225E9DD9005620CA /* Dog_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF0B506C225E9DD9005620CA /* Dog_diffuse.jpg */; };
+		DF0B5073225E9F36005620CA /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B5072225E9F36005620CA /* Dog.m */; };
+		DF0B5075225EA1CB005620CA /* EnemyController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0B5074225EA1CB005620CA /* EnemyController.m */; };
 		DF0CB2B6223A024D00C45BE3 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DF0CB2B5223A024D00C45BE3 /* icon.png */; };
+		DF2166802243157E00E3114C /* brick.obj in Resources */ = {isa = PBXBuildFile; fileRef = DF21667B2243157D00E3114C /* brick.obj */; };
+		DF2166812243157E00E3114C /* brick.png in Resources */ = {isa = PBXBuildFile; fileRef = DF21667C2243157D00E3114C /* brick.png */; };
+		DF2166822243157E00E3114C /* brick.mtl in Resources */ = {isa = PBXBuildFile; fileRef = DF21667D2243157D00E3114C /* brick.mtl */; };
+		DF2166832243157E00E3114C /* ObjBrick.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF21667E2243157E00E3114C /* ObjBrick.mm */; };
+		DF216685224317A100E3114C /* NGLModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF216684224317A100E3114C /* NGLModel.mm */; };
+		DF21668C2243409C00E3114C /* Cube.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF21668A2243409C00E3114C /* Cube.mm */; };
 		DF2CB4D02221F20D00692105 /* ZLModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4CF2221F20D00692105 /* ZLModel.mm */; };
-		DF2CB4D32221F25100692105 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4D22221F25100692105 /* Wall.m */; };
+		DF2CB4D32221F25100692105 /* Wall.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF2CB4D22221F25100692105 /* Wall.mm */; };
 		DF5FC1B32235A16600C06A6D /* floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B22235A16600C06A6D /* floor.jpg */; };
 		DF5FC1B72235B99900C06A6D /* crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B62235B99900C06A6D /* crate.jpg */; };
 		DF5FC1BA22361E3F00C06A6D /* MinimapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF5FC1B922361E3F00C06A6D /* MinimapViewController.xib */; };
@@ -29,6 +41,13 @@
 		DFDC8A9E222F1FE400F5F499 /* NGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8A9D222F1FE400F5F499 /* NGLView.m */; };
 		DFDC8AA3222F6C2300F5F499 /* NGLEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8AA2222F6C2300F5F499 /* NGLEngine.m */; };
 		DFDC8AA5222F6C3700F5F499 /* NGLFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */; };
+		DFFB7D87223F4F11002EE010 /* Model3D.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFFB7D81223F4F10002EE010 /* Model3D.mm */; };
+		DFFB7D88223F4F11002EE010 /* GLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFB7D82223F4F11002EE010 /* GLUtils.m */; };
+		DFFB7D89223F4F11002EE010 /* Texture2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFFB7D83223F4F11002EE010 /* Texture2D.mm */; };
+		DFFB7D90223F5228002EE010 /* ObjSample.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFFB7D8C223F5228002EE010 /* ObjSample.mm */; };
+		DFFB7D91223F5228002EE010 /* sample.mtl in Resources */ = {isa = PBXBuildFile; fileRef = DFFB7D8D223F5228002EE010 /* sample.mtl */; };
+		DFFB7D92223F5228002EE010 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFB7D8E223F5228002EE010 /* sample.jpg */; };
+		DFFB7D93223F5228002EE010 /* sample.obj in Resources */ = {isa = PBXBuildFile; fileRef = DFFB7D8F223F5228002EE010 /* sample.obj */; };
 		DFFC1163223190B9001DB2CF /* NGLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC1162223190B9001DB2CF /* NGLProgram.m */; };
 		DFFC11672231E967001DB2CF /* MazeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFFC11662231E967001DB2CF /* MazeView.mm */; };
 		DFFC116A2231F71D001DB2CF /* Shader.vertsh in Resources */ = {isa = PBXBuildFile; fileRef = DFFC11682231F71D001DB2CF /* Shader.vertsh */; };
@@ -37,7 +56,6 @@
 		DFFC1171223228CE001DB2CF /* north.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116D223228CE001DB2CF /* north.jpg */; };
 		DFFC1172223228CE001DB2CF /* east.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116E223228CE001DB2CF /* east.jpg */; };
 		DFFC1173223228CE001DB2CF /* west.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DFFC116F223228CE001DB2CF /* west.jpg */; };
-		DFFC1175223317E6001DB2CF /* NGLPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC1174223317E6001DB2CF /* NGLPolygon.m */; };
 		DFFC11792233187F001DB2CF /* NGLTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC11782233187F001DB2CF /* NGLTextureCache.m */; };
 		DFFC117B22332B54001DB2CF /* NGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC117A22332B54001DB2CF /* NGLTexture.m */; };
 		DFFC118022344BCD001DB2CF /* NGLShader.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFC117F22344BCD001DB2CF /* NGLShader.m */; };
@@ -62,10 +80,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF0962F2223DAE340013EB43 /* NGLCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLCamera.h; sourceTree = "<group>"; };
+		DF0962F3223DAE4B0013EB43 /* NGLCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLCamera.m; sourceTree = "<group>"; };
+		DF0B506A225E9DD9005620CA /* Dog.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dog.obj; sourceTree = "<group>"; };
+		DF0B506B225E9DD9005620CA /* Dog.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dog.mtl; sourceTree = "<group>"; };
+		DF0B506C225E9DD9005620CA /* Dog_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dog_diffuse.jpg; sourceTree = "<group>"; };
+		DF0B5071225E9F25005620CA /* Dog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
+		DF0B5072225E9F36005620CA /* Dog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
+		DF0B5074225EA1CB005620CA /* EnemyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnemyController.m; sourceTree = "<group>"; };
+		DF0B5076225EA1DD005620CA /* EnemyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnemyController.h; sourceTree = "<group>"; };
 		DF0CB2B5223A024D00C45BE3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Assets/icon.png; sourceTree = "<group>"; };
+		DF21667B2243157D00E3114C /* brick.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = brick.obj; sourceTree = "<group>"; };
+		DF21667C2243157D00E3114C /* brick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brick.png; sourceTree = "<group>"; };
+		DF21667D2243157D00E3114C /* brick.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = brick.mtl; sourceTree = "<group>"; };
+		DF21667E2243157E00E3114C /* ObjBrick.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjBrick.mm; sourceTree = "<group>"; };
+		DF21667F2243157E00E3114C /* ObjBrick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjBrick.h; sourceTree = "<group>"; };
+		DF216684224317A100E3114C /* NGLModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NGLModel.mm; sourceTree = "<group>"; };
+		DF216686224317B300E3114C /* NGLModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLModel.h; sourceTree = "<group>"; };
+		DF21668A2243409C00E3114C /* Cube.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Cube.mm; sourceTree = "<group>"; };
+		DF21668B2243409C00E3114C /* Cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cube.h; sourceTree = "<group>"; };
 		DF2CB4CF2221F20D00692105 /* ZLModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZLModel.mm; sourceTree = "<group>"; };
 		DF2CB4D12221F22800692105 /* ZLModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZLModel.h; sourceTree = "<group>"; };
-		DF2CB4D22221F25100692105 /* Wall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
+		DF2CB4D22221F25100692105 /* Wall.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Wall.mm; sourceTree = "<group>"; };
 		DF2CB4D42221F26100692105 /* Wall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
 		DF5FC1B22235A16600C06A6D /* floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = floor.jpg; sourceTree = "<group>"; };
 		DF5FC1B62235B99900C06A6D /* crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crate.jpg; sourceTree = "<group>"; };
@@ -102,6 +138,17 @@
 		DFDC8AA2222F6C2300F5F499 /* NGLEngine.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = NGLEngine.m; sourceTree = "<group>"; };
 		DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLFunctions.m; sourceTree = "<group>"; };
 		DFDC8AA6222F6C6300F5F499 /* NGLFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLFunctions.h; sourceTree = "<group>"; };
+		DFFB7D80223F4F10002EE010 /* GLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUtils.h; sourceTree = "<group>"; };
+		DFFB7D81223F4F10002EE010 /* Model3D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Model3D.mm; sourceTree = "<group>"; };
+		DFFB7D82223F4F11002EE010 /* GLUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLUtils.m; sourceTree = "<group>"; };
+		DFFB7D83223F4F11002EE010 /* Texture2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture2D.mm; sourceTree = "<group>"; };
+		DFFB7D85223F4F11002EE010 /* Model3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model3D.h; sourceTree = "<group>"; };
+		DFFB7D86223F4F11002EE010 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2D.h; sourceTree = "<group>"; };
+		DFFB7D8B223F5228002EE010 /* ObjSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjSample.h; sourceTree = "<group>"; };
+		DFFB7D8C223F5228002EE010 /* ObjSample.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjSample.mm; sourceTree = "<group>"; };
+		DFFB7D8D223F5228002EE010 /* sample.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.mtl; sourceTree = "<group>"; };
+		DFFB7D8E223F5228002EE010 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample.jpg; sourceTree = "<group>"; };
+		DFFB7D8F223F5228002EE010 /* sample.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.obj; sourceTree = "<group>"; };
 		DFFC1162223190B9001DB2CF /* NGLProgram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLProgram.m; sourceTree = "<group>"; };
 		DFFC1164223190CC001DB2CF /* NGLProgram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLProgram.h; sourceTree = "<group>"; };
 		DFFC11652231E94F001DB2CF /* MazeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
@@ -112,8 +159,6 @@
 		DFFC116D223228CE001DB2CF /* north.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = north.jpg; sourceTree = "<group>"; };
 		DFFC116E223228CE001DB2CF /* east.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = east.jpg; sourceTree = "<group>"; };
 		DFFC116F223228CE001DB2CF /* west.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = west.jpg; sourceTree = "<group>"; };
-		DFFC1174223317E6001DB2CF /* NGLPolygon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLPolygon.m; sourceTree = "<group>"; };
-		DFFC1176223317F9001DB2CF /* NGLPolygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLPolygon.h; sourceTree = "<group>"; };
 		DFFC117722331874001DB2CF /* NGLTextureCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NGLTextureCache.h; sourceTree = "<group>"; };
 		DFFC11782233187F001DB2CF /* NGLTextureCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLTextureCache.m; sourceTree = "<group>"; };
 		DFFC117A22332B54001DB2CF /* NGLTexture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NGLTexture.m; sourceTree = "<group>"; };
@@ -149,9 +194,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF0B5069225E9DD9005620CA /* Dog */ = {
+			isa = PBXGroup;
+			children = (
+				DF0B506A225E9DD9005620CA /* Dog.obj */,
+				DF0B506B225E9DD9005620CA /* Dog.mtl */,
+				DF0B506C225E9DD9005620CA /* Dog_diffuse.jpg */,
+			);
+			path = Dog;
+			sourceTree = "<group>";
+		};
+		DF0B5070225E9DE3005620CA /* Enemy */ = {
+			isa = PBXGroup;
+			children = (
+				DF0B5071225E9F25005620CA /* Dog.h */,
+				DF0B5072225E9F36005620CA /* Dog.m */,
+				DF0B5074225EA1CB005620CA /* EnemyController.m */,
+				DF0B5076225EA1DD005620CA /* EnemyController.h */,
+			);
+			path = Enemy;
+			sourceTree = "<group>";
+		};
 		DF5FC1B42235A3E800C06A6D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				DF0B5069225E9DD9005620CA /* Dog */,
 				DF5FC1B62235B99900C06A6D /* crate.jpg */,
 				DF5FC1B22235A16600C06A6D /* floor.jpg */,
 				DFFC116E223228CE001DB2CF /* east.jpg */,
@@ -190,6 +257,7 @@
 				DFA2228C220B7F07002F22F9 /* MazeTests */,
 				DFA22297220B7F07002F22F9 /* MazeUITests */,
 				DFA22272220B7F06002F22F9 /* Products */,
+				DFC0C6292241712F0029756B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +280,7 @@
 				DFDC8A9C222F1B2200F5F499 /* NGLEngine */,
 				DFA22282220B7F06002F22F9 /* Info.plist */,
 				DF0CB2B5223A024D00C45BE3 /* icon.png */,
+				DF0B5070225E9DE3005620CA /* Enemy */,
 				DF5FC1B82235BF5300C06A6D /* MazeMinmap */,
 				DFA222B1220B89F9002F22F9 /* GLESRenderer.cpp */,
 				DFA222AF220B89F9002F22F9 /* GLESRenderer.hpp */,
@@ -222,10 +291,8 @@
 				DFA22278220B7F06002F22F9 /* ViewController.mm */,
 				DFFC11652231E94F001DB2CF /* MazeView.h */,
 				DFFC11662231E967001DB2CF /* MazeView.mm */,
-				DF2CB4CF2221F20D00692105 /* ZLModel.mm */,
-				DF2CB4D12221F22800692105 /* ZLModel.h */,
 				DF2CB4D42221F26100692105 /* Wall.h */,
-				DF2CB4D22221F25100692105 /* Wall.m */,
+				DF2CB4D22221F25100692105 /* Wall.mm */,
 				DFDC8A9B222F1B0300F5F499 /* SupportFiles */,
 			);
 			path = Maze;
@@ -249,9 +316,18 @@
 			path = MazeUITests;
 			sourceTree = "<group>";
 		};
+		DFC0C6292241712F0029756B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DFDC8A9B222F1B0300F5F499 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				DF2CB4CF2221F20D00692105 /* ZLModel.mm */,
+				DF2CB4D12221F22800692105 /* ZLModel.h */,
 				DFA222AC220B8136002F22F9 /* MazeRenderer.mm */,
 				DFA222AE220B8152002F22F9 /* MazeRenderer.h */,
 				DFA22275220B7F06002F22F9 /* AppDelegate.m */,
@@ -263,6 +339,8 @@
 		DFDC8A9C222F1B2200F5F499 /* NGLEngine */ = {
 			isa = PBXGroup;
 			children = (
+				DFFB7D8A223F51A5002EE010 /* Demo */,
+				DFFB7D7F223F4EE7002EE010 /* ObjLoader */,
 				DFFC117D22344B27001DB2CF /* Shader */,
 				DFDC8A9F222F207700F5F499 /* NGLView.h */,
 				DFDC8A9D222F1FE400F5F499 /* NGLView.m */,
@@ -272,16 +350,50 @@
 				DFDC8AA4222F6C3700F5F499 /* NGLFunctions.m */,
 				DFFC1164223190CC001DB2CF /* NGLProgram.h */,
 				DFFC1162223190B9001DB2CF /* NGLProgram.m */,
-				DFFC1176223317F9001DB2CF /* NGLPolygon.h */,
-				DFFC1174223317E6001DB2CF /* NGLPolygon.m */,
 				DFFC117722331874001DB2CF /* NGLTextureCache.h */,
 				DFFC11782233187F001DB2CF /* NGLTextureCache.m */,
 				DFFC117C22332B64001DB2CF /* NGLTexture.h */,
 				DFFC117A22332B54001DB2CF /* NGLTexture.m */,
 				DFFC11A22234AF17001DB2CF /* NGLObject.h */,
 				DFFC11A02234AF06001DB2CF /* NGLObject.m */,
+				DF0962F2223DAE340013EB43 /* NGLCamera.h */,
+				DF0962F3223DAE4B0013EB43 /* NGLCamera.m */,
+				DF216686224317B300E3114C /* NGLModel.h */,
+				DF216684224317A100E3114C /* NGLModel.mm */,
 			);
 			path = NGLEngine;
+			sourceTree = "<group>";
+		};
+		DFFB7D7F223F4EE7002EE010 /* ObjLoader */ = {
+			isa = PBXGroup;
+			children = (
+				DFFB7D80223F4F10002EE010 /* GLUtils.h */,
+				DFFB7D82223F4F11002EE010 /* GLUtils.m */,
+				DFFB7D85223F4F11002EE010 /* Model3D.h */,
+				DFFB7D81223F4F10002EE010 /* Model3D.mm */,
+				DFFB7D86223F4F11002EE010 /* Texture2D.h */,
+				DFFB7D83223F4F11002EE010 /* Texture2D.mm */,
+			);
+			path = ObjLoader;
+			sourceTree = "<group>";
+		};
+		DFFB7D8A223F51A5002EE010 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				DF21668B2243409C00E3114C /* Cube.h */,
+				DF21668A2243409C00E3114C /* Cube.mm */,
+				DF21667D2243157D00E3114C /* brick.mtl */,
+				DF21667B2243157D00E3114C /* brick.obj */,
+				DF21667C2243157D00E3114C /* brick.png */,
+				DF21667F2243157E00E3114C /* ObjBrick.h */,
+				DF21667E2243157E00E3114C /* ObjBrick.mm */,
+				DFFB7D8B223F5228002EE010 /* ObjSample.h */,
+				DFFB7D8C223F5228002EE010 /* ObjSample.mm */,
+				DFFB7D8E223F5228002EE010 /* sample.jpg */,
+				DFFB7D8D223F5228002EE010 /* sample.mtl */,
+				DFFB7D8F223F5228002EE010 /* sample.obj */,
+			);
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		DFFC117D22344B27001DB2CF /* Shader */ = {
@@ -402,13 +514,22 @@
 				DF5FC1B72235B99900C06A6D /* crate.jpg in Resources */,
 				DFFC1172223228CE001DB2CF /* east.jpg in Resources */,
 				DF5FC1B32235A16600C06A6D /* floor.jpg in Resources */,
+				DFFB7D92223F5228002EE010 /* sample.jpg in Resources */,
+				DFFB7D93223F5228002EE010 /* sample.obj in Resources */,
+				DF2166802243157E00E3114C /* brick.obj in Resources */,
 				DFA22281220B7F06002F22F9 /* LaunchScreen.storyboard in Resources */,
 				DFFC1173223228CE001DB2CF /* west.jpg in Resources */,
 				DFFC1171223228CE001DB2CF /* north.jpg in Resources */,
 				DFFC1170223228CE001DB2CF /* south.jpg in Resources */,
+				DF2166812243157E00E3114C /* brick.png in Resources */,
 				DF0CB2B6223A024D00C45BE3 /* icon.png in Resources */,
+				DF0B506F225E9DD9005620CA /* Dog_diffuse.jpg in Resources */,
+				DF2166822243157E00E3114C /* brick.mtl in Resources */,
+				DF0B506D225E9DD9005620CA /* Dog.obj in Resources */,
+				DF0B506E225E9DD9005620CA /* Dog.mtl in Resources */,
 				DFA2227E220B7F06002F22F9 /* Assets.xcassets in Resources */,
 				DFA2227C220B7F06002F22F9 /* Main.storyboard in Resources */,
+				DFFB7D91223F5228002EE010 /* sample.mtl in Resources */,
 				DFFC116B2231F71D001DB2CF /* Shader.fragsh in Resources */,
 				DF5FC1BA22361E3F00C06A6D /* MinimapViewController.xib in Resources */,
 			);
@@ -437,24 +558,33 @@
 			files = (
 				DF2CB4D02221F20D00692105 /* ZLModel.mm in Sources */,
 				DFA222AA220B7F28002F22F9 /* DisjointSet.cpp in Sources */,
-				DF2CB4D32221F25100692105 /* Wall.m in Sources */,
+				DF2CB4D32221F25100692105 /* Wall.mm in Sources */,
 				DFFC117B22332B54001DB2CF /* NGLTexture.m in Sources */,
+				DFFB7D90223F5228002EE010 /* ObjSample.mm in Sources */,
 				DFFC11672231E967001DB2CF /* MazeView.mm in Sources */,
+				DF0B5075225EA1CB005620CA /* EnemyController.m in Sources */,
 				DFA222B4220B89F9002F22F9 /* GLESRenderer.cpp in Sources */,
 				DFA222AD220B8136002F22F9 /* MazeRenderer.mm in Sources */,
+				DF0962F4223DAE4B0013EB43 /* NGLCamera.m in Sources */,
 				DFFC11A12234AF06001DB2CF /* NGLObject.m in Sources */,
 				DFDC8A9E222F1FE400F5F499 /* NGLView.m in Sources */,
+				DFFB7D87223F4F11002EE010 /* Model3D.mm in Sources */,
 				DFA22279220B7F06002F22F9 /* ViewController.mm in Sources */,
+				DF216685224317A100E3114C /* NGLModel.mm in Sources */,
 				DFFC1163223190B9001DB2CF /* NGLProgram.m in Sources */,
+				DF21668C2243409C00E3114C /* Cube.mm in Sources */,
 				DFFC11792233187F001DB2CF /* NGLTextureCache.m in Sources */,
 				DF5FC1BC22361E5B00C06A6D /* MinimapViewController.mm in Sources */,
+				DF0B5073225E9F36005620CA /* Dog.m in Sources */,
 				DFA22284220B7F06002F22F9 /* main.m in Sources */,
+				DF2166832243157E00E3114C /* ObjBrick.mm in Sources */,
 				DFA222AB220B7F28002F22F9 /* maze.cpp in Sources */,
 				DFDC8AA3222F6C2300F5F499 /* NGLEngine.m in Sources */,
 				DFFC118022344BCD001DB2CF /* NGLShader.m in Sources */,
+				DFFB7D89223F4F11002EE010 /* Texture2D.mm in Sources */,
 				DFA22276220B7F06002F22F9 /* AppDelegate.m in Sources */,
 				DFDC8AA5222F6C3700F5F499 /* NGLFunctions.m in Sources */,
-				DFFC1175223317E6001DB2CF /* NGLPolygon.m in Sources */,
+				DFFB7D88223F4F11002EE010 /* GLUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +693,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -616,6 +746,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -628,14 +759,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TKHC8Z843;
 				INFOPLIST_FILE = Maze/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = bcit.comp.Maze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/bullet3-master/src/";
 			};
 			name = Debug;
 		};
@@ -646,14 +779,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TKHC8Z843;
 				INFOPLIST_FILE = Maze/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = bcit.comp.Maze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/bullet3-master/src/";
 			};
 			name = Release;
 		};

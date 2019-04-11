@@ -9,18 +9,28 @@
 #import "ViewController.h"
 #import "MazeView.h"
 #import "NGLView.h"
+#import "EnemyController.h"
 
 #include "maze.hpp"
-
 
 @interface ViewController ()
 {
     NGLView * _view;
     BOOL isLongPressing;
     BOOL isMapShowing;
+    
+    BOOL isEnemyAutoMoving; // is enemy edit mode
+    
     MinimapViewController * _minimapViewController;
     
+    EnemyController * _enemyController;
+    
     __weak IBOutlet UILabel *_fogIntensityText;
+    
+    __weak IBOutlet UIView *modelEditDescribeView;
+    
+    __weak IBOutlet UIView *describeView;
+    
 }
 @property (nonatomic , strong) MazeView*   maze;
 
@@ -46,12 +56,22 @@
     
     _minimapViewController = [[MinimapViewController alloc] init];
     
+    // enemy
+    isEnemyAutoMoving = true;
+    _enemyController = [[EnemyController alloc]initWithEnemy:[_maze getEnemy] walls:[_maze getWalls]];
+    [_enemyController switchAutoMoving:isEnemyAutoMoving];
+//    self->modelEditDescribeView.frame = CGRectMake(-CGRectGetWidth(self.view.bounds),
+//                                          self->modelEditDescribeView.frame.origin.y,
+//                                          0,
+//                                          self->modelEditDescribeView.frame.size.height);
+    
     NSLog(@"Debug: End: viewDidLoad");
 }
 
 - (void)update
 {
     [_maze update:self.timeSinceLastUpdate];
+    [_enemyController update:self.timeSinceLastUpdate];
 }
 /**
  *  渲染场景代码
@@ -61,6 +81,7 @@
     // [self.view drawRect:rect];
     if(isLongPressing){
         [_maze moveForward];
+        [_minimapViewController setCurrentPosition:_maze.camera.position rotation:_maze.camera.rotation];
     }
     
     [_view preRender];
@@ -109,6 +130,8 @@
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
+
+    
     UITapGestureRecognizer *twoFingersDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTwoFingersDoubleTap:)];
     twoFingersDoubleTap.numberOfTapsRequired = 2;
     twoFingersDoubleTap.numberOfTouchesRequired = 2;
@@ -121,9 +144,18 @@
     [self.view addGestureRecognizer:pen];
     
     //[longPress requireGestureRecognizerToFail:pen];
-//
-//    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinch:)];
-//    [self.view addGestureRecognizer:pinch];
+
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinch:)];
+    [self.view addGestureRecognizer:pinch];
+    
+    UITapGestureRecognizer *threeFingerSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didThreeFingerSingleTap:)];
+    threeFingerSingleTap.numberOfTapsRequired = 1;
+    threeFingerSingleTap.numberOfTouchesRequired = 3;
+    [self.view addGestureRecognizer:threeFingerSingleTap];
+    
+    UIPanGestureRecognizer *twoFingerPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didTwoFingersPan:)];
+    twoFingerPan.minimumNumberOfTouches = 2;
+    [self.view addGestureRecognizer:twoFingerPan];
 }
 
 
@@ -140,11 +172,16 @@
 
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender {
     NSLog(@"Pan ");
-    // CGPoint location = [sender locationInView:self.view];
-    CGPoint translation = [sender translationInView:self.view];
-    // CGPoint velocity = [sender velocityInView:self.view];
     
-    [_maze lookAround:translation isEnd:sender.state == UIGestureRecognizerStateEnded];
+    CGPoint translation = [sender translationInView:self.view];
+
+    // move enemy
+    if(isEnemyAutoMoving)
+    {
+        [_maze lookAround:translation isEnd:sender.state == UIGestureRecognizerStateEnded];
+    } else {
+        [_enemyController moveAround:translation isEnd:sender.state == UIGestureRecognizerStateEnded];
+    }
 }
 
 - (IBAction)didLongPress:(UILongPressGestureRecognizer *)sender {
@@ -162,7 +199,6 @@
     Maze* _mazeGenerate =_maze.mazeGenerate;
     
     if(!isMapShowing){
-
         _minimapViewController.mazeGenerate = _mazeGenerate;
         [_minimapViewController setCurrentPosition:_maze.camera.position rotation:_maze.camera.rotation];
         [self loadScene:_minimapViewController];
@@ -173,6 +209,61 @@
         isMapShowing = NO;
     }
     
+}
+
+-(void) didThreeFingerSingleTap:(UITapGestureRecognizer *)sender {
+    NSLog(@"did threeFingerSingleTap ");
+    isEnemyAutoMoving = !isEnemyAutoMoving;
+    [_enemyController switchAutoMoving:isEnemyAutoMoving];
+    
+    if(!isEnemyAutoMoving){
+    [UIView animateWithDuration:0.5 animations:^{
+        self->describeView.frame = CGRectMake(CGRectGetWidth(self.view.bounds),
+                                        self->describeView.frame.origin.y,
+                                        self->describeView.frame.size.width,
+                                        self->describeView.frame.size.height);
+        
+        self->modelEditDescribeView.frame = CGRectMake(
+                                              (CGRectGetWidth(self.view.bounds) - self->modelEditDescribeView.frame.size.width) /2,
+                                              self->modelEditDescribeView.frame.origin.y,
+                                              self->modelEditDescribeView.frame.size.width,
+                                              self->modelEditDescribeView.frame.size.height);
+    }];
+    } else {
+        [UIView animateWithDuration:0.5 animations:^{
+        self->describeView.frame = CGRectMake((CGRectGetWidth(self.view.bounds) - self->describeView.frame.size.width) /2,
+                                              self->describeView.frame.origin.y,
+                                              self->describeView.frame.size.width,
+                                              self->describeView.frame.size.height);
+        
+        self->modelEditDescribeView.frame = CGRectMake(-CGRectGetWidth(self.view.bounds),
+                                                       self->modelEditDescribeView.frame.origin.y,
+                                                       self->modelEditDescribeView.frame.size.width,
+                                                       self->modelEditDescribeView.frame.size.height);
+        }];
+    }
+}
+
+-(void) didTwoFingersPan:(UIPanGestureRecognizer *)sender {
+    NSLog(@"did TwoFingersPan ");
+    
+    
+    CGPoint translation = [sender translationInView:self.view];
+    // rotate enemy
+    if(!isEnemyAutoMoving)
+    {
+        [_enemyController rotate:translation isEnd:sender.state == UIGestureRecognizerStateEnded];
+    }
+    
+}
+
+-(void) didPinch:(UIPinchGestureRecognizer *)sender {
+    NSLog(@"did Pinch ");
+    // zoom enemy
+    if(!isEnemyAutoMoving)
+    {
+        [_enemyController zoom:sender.scale isEnd:sender.state == UIGestureRecognizerStateEnded];
+    }
 }
 
 #pragma mark load screen

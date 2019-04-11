@@ -9,12 +9,13 @@
 #ifndef Wall_h
 #define Wall_h
 
-#import "ZLModel.h"
+#import <GLKit/GLKit.h>
 #import "NGLShader.h"
+#import "NGLObject.h"
+#import "Cube.h"
 
-@interface Wall : ZLModel
+@interface Wall : Cube
 
-- (instancetype)initWithShader:(NGLShader *)shader view:(UIView *)view;
 
 @end
 

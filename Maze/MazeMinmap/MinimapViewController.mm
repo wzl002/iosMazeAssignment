@@ -36,12 +36,14 @@
     oWidth = pView.bounds.size.width/2;
     oHeight = pView.bounds.size.height/2;
     unit = oWidth/5;
+    
+    float size =  pView.frame.size.width * 0.8;
 
     containerView = [[UIView alloc] initWithFrame:CGRectMake(
-                                     20.0f,
-                                     oHeight - oWidth,
-                                     pView.frame.size.width - 40,
-                                     pView.frame.size.width )];
+                                     oWidth - size/2,
+                                     oHeight - size/2,
+                                     size,
+                                     size)];
 
     [containerView setBackgroundColor:[[UIColor alloc] initWithRed:0.3f green:0.3f blue:0.3f alpha:0.68f] ];
     [self.view addSubview:containerView];
@@ -64,6 +66,7 @@
 - (void) setCurrentPosition:(GLKVector3)location rotation:(GLKVector3)rotation {
     _location = location;
     _rotation = rotation;
+    [self updatePlayerLocation];
 }
 
 - (void) createMinimap
@@ -72,22 +75,6 @@
     
     int numRows = _maze->rows, numCols = _maze->cols;
     int i, j;
-    for (i=numRows-1; i>=0; i--) {
-        for (j=numCols-1; j>=0; j--) {    // top
-            printf(" %c ", _maze->GetCell(i, j).southWallPresent ? '-' : ' ');
-        }
-        printf("\n");
-        for (j=numCols-1; j>=0; j--) {    // left/right
-            printf("%c", _maze->GetCell(i, j).eastWallPresent ? '|' : ' ');
-            printf("%c", ((i+j)< 1) ? '*' : ' ');
-            printf("%c", _maze->GetCell(i, j).westWallPresent ? '|' : ' ');
-        }
-        printf("\n");
-        for (j=numCols-1; j>=0; j--) {    // bottom
-            printf(" %c ", _maze->GetCell(i, j).northWallPresent ? '-' : ' ');
-        }
-        printf("\n");
-    }
     
     for (i=numRows-1; i>=0; i--) {
         for (j=numCols-1; j>=0; j--) {
@@ -111,7 +98,7 @@
 
 - (void) updatePlayerLocation
 {
-    if(oWidth == 0){
+    if(oWidth < 1){
         return;
     }
     float x = oWidth + unit/4 + _location.x * unit;
@@ -149,23 +136,6 @@
     colView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:colView];
 }
-
--(void)drawRect:(CGRect)rect
-{
-    NSLog(@"draw");
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-    CGContextBeginPath(ctx);
-    CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));  // top left
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMidY(rect));  // mid right
-    CGContextAddLineToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));  // bottom left
-    CGContextClosePath(ctx);
-    
-    CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
-    CGContextFillPath(ctx);
-}
-
-
 
 
 @end
